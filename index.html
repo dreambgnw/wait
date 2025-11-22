@@ -20,12 +20,10 @@ html, body {
   text-align: center;
 }
 
-/* スクショの余白感に合わせる */
 .wrapper {
   padding: 40px 20px;
 }
 
-/* タイトル部 */
 h1 {
   font-weight: 400;
   font-size: 1.4rem;
@@ -38,7 +36,6 @@ h1 {
   margin-bottom: 1.4rem;
 }
 
-/* テキストラベル */
 .label {
   font-size: 0.95rem;
   opacity: 0.65;
@@ -49,101 +46,21 @@ h1 {
   font-size: 0.95rem;
   margin-bottom: 1.4rem;
 }
-
-/* 画面要素 */
-#soon,
-#release,
-#choices {
-  display: none;
-}
-
-/* 公開アニメーション */
-#release {
-  opacity: 0;
-  animation: fadein 1.6s ease forwards;
-}
-
-@keyframes fadein {
-  to { opacity: 1; }
-}
-
-.button {
-  display: inline-block;
-  padding: 12px 26px;
-  margin: 10px;
-  border: 1px solid #222;
-  border-radius: 6px;
-  text-decoration: none;
-  color: #222;
-  font-size: 1rem;
-}
-.button:hover {
-  background: #222;
-  color: white;
-}
 </style>
 </head>
 
 <body>
 <div class="wrapper">
 
-<!-- Coming Soon（スクショのデザイン再現） -->
-<div id="soon">
   <h1>いってらっしゃい、待ってるよ。</h1>
   <div class="site-title">QUICK INSTANT</div>
 
   <div class="label">Pre-Publish</div>
-  <div class="date">2025-11-22 10:00:00–23:59:59</div>
+  <div class="date">2025-11-22 10:00–23:59</div>
 
   <div class="label">Publish</div>
   <div class="date">2026-02-26</div>
+
 </div>
-
-<!-- 公開アニメーション用（軽い例） -->
-<div id="release">
-  <h1 style="margin-bottom:1rem;">公開開始</h1>
-  <div class="label">Welcome Back</div>
-</div>
-
-<!-- 公開後の行き先選択 -->
-<div id="choices">
-  <h2 style="margin-bottom:1.8rem;">どちらへ行きますか？</h2>
-  <a href="https://hogus.work" class="button">QUICK INSTANT</a>
-  <a href="https://blog.hogus.work" class="button">BLOG</a>
-</div>
-
-</div><!-- wrapper -->
-
-<script>
-(function(){
-  // 公開スケジュール
-  const tempStart = new Date("2025-11-22T10:00:00+09:00").getTime();
-  const tempEnd   = new Date("2025-11-22T23:59:59+09:00").getTime();
-  const official  = new Date("2026-02-26T00:00:00+09:00").getTime();
-
-  const now = new Date().getTime();
-
-  const soon = document.getElementById("soon");
-  const release = document.getElementById("release");
-  const choices = document.getElementById("choices");
-
-  // ◆ 公開前
-  if (now < tempStart) {
-    soon.style.display = "block";
-    return;
-  }
-
-  // ◆ 一時公開または本公開 → アニメ再生
-  release.style.display = "block";
-
-  // 3秒後に選択画面へ
-  setTimeout(()=>{
-    release.style.display = "none";
-    choices.style.display = "block";
-  }, 3000);
-
-})();
-</script>
-
 </body>
 </html>
