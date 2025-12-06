@@ -1,63 +1,208 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Coming Soon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUICK INSTANT LOUNGE - Coming Soon</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* フォント設定: シンプルで可読性の高いインター（デフォルト） */
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  color: #111;
-  font-family: "Noto Serif JP", serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+        /* ほこりのパーティクルアニメーション */
+        @keyframes fall {
+            0% { transform: translateY(-100px); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
 
-.wrapper {
-  padding: 40px 20px;
-}
+        .dust-particle {
+            position: absolute;
+            /* 背景に合わせて、黒っぽい透明なほこりに変更 */
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation-name: fall;
+            animation-iteration-count: infinite;
+            filter: blur(0.5px); /* ぼかして空気感を出す */
+        }
 
-h1 {
-  font-weight: 400;
-  font-size: 1.4rem;
-  margin-bottom: 2.4rem;
-}
+        /* 窓からの光をシミュレートするグラデーションオーバーレイ */
+        .sunlight-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 白背景に合わせた、光芒（光の線）ではなく、窓からの非常に淡い光のグラデーション */
+            background: radial-gradient(
+                circle at 10% 10%,
+                rgba(0, 0, 0, 0) 0%, /* 中心は透明 */
+                rgba(0, 0, 0, 0.05) 60% /* 外側に向かって薄い影/ニュアンス */
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
 
-.site-title {
-  font-weight: 700;
-  font-size: 1.8rem;
-  margin-bottom: 1.4rem;
-}
-
-.label {
-  font-size: 0.95rem;
-  opacity: 0.65;
-  margin-bottom: 0.2rem;
-}
-
-.date {
-  font-size: 0.95rem;
-  margin-bottom: 1.4rem;
-}
-</style>
+        /* 全体の背景: 白に近い淡いグレーに変更 */
+        /* bodyタグのクラスでbg-gray-100を指定するため、ここでは削除 */
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 白背景に合わせて、テキストを黒系に変更
+                        'primary-text': '#1f2937', // gray-800
+                        'secondary-text': '#6b7280', // gray-500
+                        // アクセントカラーを黒に変更
+                        'accent': '#000000', // black
+                    }
+                }
+            }
+        }
+    </script>
 </head>
+<!-- 背景を淡いグレー (bg-gray-100)、文字色をダーク系 (text-primary-text) に変更 -->
+<body class="min-h-screen flex flex-col justify-center items-center text-primary-text p-4 overflow-hidden relative bg-gray-100">
 
-<body>
-<div class="wrapper">
+    <!-- ほこりエフェクトのコンテナ -->
+    <div id="dust-container" class="absolute inset-0 z-0"></div>
 
-  <h1>いってらっしゃい、待ってるよ。</h1>
-  <div class="site-title">QUICK INSTANT</div>
+    <!-- 窓からの光シミュレーション -->
+    <div class="sunlight-overlay"></div>
 
-  <div class="label">Publish</div>
-  <div class="date">2026-02-26</div>
+    <!-- メインコンテンツ (z-10より上) -->
+    <!-- 背景を透明度の高い白、境界線をグレーに変更 -->
+    <div class="z-20 text-center max-w-2xl w-full bg-white bg-opacity-80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-2xl border border-gray-200">
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-accent">
+            QUICK INSTANT LOUNGE
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 font-light text-secondary-text">
+            Coming Soon: 新しい空間でお会いしましょう
+        </p>
 
-</div>
+        <!-- カウントダウン表示エリア -->
+        <!-- 背景をさらに淡いグレーに変更 -->
+        <div class="bg-gray-100 bg-opacity-80 p-6 rounded-lg mb-8 shadow-inner">
+            <p class="text-lg uppercase mb-3 text-secondary-text">オープンまで</p>
+            <div id="countdown" class="grid grid-cols-4 gap-4">
+                <!-- カウントダウンの各要素の数字の色を濃い色 (text-gray-900) に変更 -->
+                <div class="col-span-1">
+                    <span id="days" class="block text-4xl md:text-5xl font-mono font-bold text-gray-900">00</span>
+                    <span class="block text-xs md:text-sm uppercase mt-1 text-secondary-text">Days</span>
+                </div>
+                <div class="col-span-1">
+                    <span id="hours" class="block text-4xl md:text-5xl font-mono font-bold text-gray-900">00</span>
+                    <span class="block text-xs md:text-sm uppercase mt-1 text-secondary-text">Hours</span>
+                </div>
+                <div class="col-span-1">
+                    <span id="minutes" class="block text-4xl md:text-5xl font-mono font-bold text-gray-900">00</span>
+                    <span class="block text-xs md:text-sm uppercase mt-1 text-secondary-text">Minutes</span>
+                </div>
+                <div class="col-span-1">
+                    <span id="seconds" class="block text-4xl md:text-5xl font-mono font-bold text-gray-900">00</span>
+                    <span class="block text-xs md:text-sm uppercase mt-1 text-secondary-text">Seconds</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 移行メッセージとリンク -->
+        <div id="redirect-message" class="hidden">
+            <p class="text-xl md:text-3xl font-semibold mb-4 text-accent">
+                オープンしました！
+            </p>
+            <!-- ボタンの配色を黒ベースに変更 -->
+            <a href="https://hogus.work" class="inline-block bg-accent text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-800 transition duration-300 transform hover:scale-105 shadow-lg">
+                hogus.work へ移動
+            </a>
+        </div>
+
+        <p class="mt-8 text-sm text-secondary-text">
+            予定日時: 2026/02/26 0:00 JST
+        </p>
+    </div>
+
+    <script>
+        // --- 設定 ---
+        // ターゲット日時: 2026/2/26 0:00 JST (UTCで記述: 2026-02-25T15:00:00Z)
+        const TARGET_DATE_JST = new Date("2026-02-25T15:00:00Z").getTime();
+        const REDIRECT_URL = "https://hogus.work";
+        const DUST_PARTICLE_COUNT = 40; // ほこりの数
+
+        // --- DOM要素 ---
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownEl = document.getElementById('countdown');
+        const redirectMessageEl = document.getElementById('redirect-message');
+        const dustContainer = document.getElementById('dust-container');
+
+        // --- カウントダウンロジック ---
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE_JST - now;
+
+            // 時間の計算
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // ゼロパディング関数
+            const pad = (num) => String(num).padStart(2, '0');
+
+            if (distance < 0) {
+                // 期限を過ぎた場合
+                clearInterval(interval);
+                countdownEl.classList.add('hidden');
+                redirectMessageEl.classList.remove('hidden');
+                // 自動リダイレクトはしません。ユーザーの操作を促すメッセージを表示します。
+            } else {
+                // 通常のカウントダウン
+                daysEl.textContent = pad(days);
+                hoursEl.textContent = pad(hours);
+                minutesEl.textContent = pad(minutes);
+                secondsEl.textContent = pad(seconds);
+            }
+        }
+
+        // --- ほこりエフェクト生成ロジック ---
+        function createDustParticles() {
+            for (let i = 0; i < DUST_PARTICLE_COUNT; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('dust-particle');
+
+                // ランダムな位置、サイズ、アニメーション速度を設定
+                const size = Math.random() * 2 + 1; // 1pxから3px
+                const duration = Math.random() * 10 + 10; // 10秒から20秒
+                const delay = Math.random() * duration * -1; // マイナス値で初期遅延を設定し、最初から表示
+                const left = Math.random() * 100; // 0%から100%
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+
+                dustContainer.appendChild(particle);
+            }
+        }
+
+        // --- 初期化 ---
+        // 初回実行
+        updateCountdown();
+        // 1秒ごとに更新
+        const interval = setInterval(updateCountdown, 1000);
+
+        // ほこりエフェクトの生成
+        createDustParticles();
+
+    </script>
 </body>
 </html>
