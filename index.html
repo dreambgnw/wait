@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOUNGE | QUICK INSTANT</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* フォント設定: シンプルで可読性の高いインター（デフォルト） */
         :root {
             font-family: 'Inter', serif;
         }
 
-        /* ほこりのパーティクルアニメーション */
         @keyframes fall {
             0% { transform: translateY(-100px); opacity: 0; }
             50% { opacity: 0.2; }
@@ -21,7 +18,7 @@
 
         .dust-particle {
             position: absolute;
-            background: rgba(0, 0, 0, 0.15); /* 薄い黒で埃を表現 */
+            background: rgba(0, 0, 0, 0.15);
             border-radius: 50%;
             pointer-events: none;
             animation-name: fall;
@@ -30,7 +27,6 @@
             z-index: 10;
         }
 
-        /* 窓からの光をシミュレートするオーバーレイ */
         .sunlight-overlay {
             position: absolute;
             top: 0;
@@ -39,9 +35,8 @@
             height: 100%;
             pointer-events: none;
             z-index: 5;
-            /* 左上から斜めに光が差し込み、右下にかけて影になるような効果を再現 */
             background: radial-gradient(
-                circle at 20% 20%, /* 光源の位置を左上に寄せる */
+                circle at 20% 20%, 
                 rgba(255, 255, 255, 0.5) 0%, 
                 rgba(255, 255, 255, 0.1) 40%,
                 rgba(0, 0, 0, 0.1) 80%, 
@@ -49,23 +44,36 @@
             );
         }
 
-        /* プログレスバーの背景トラック (バッテリーの容器) */
         #progress-track {
             height: 12px;
-            background-color: #ffffff; /* 白のトラック */
+            background-color: #ffffff;
             border-radius: 4px; 
             overflow: hidden;
-            border: 1px solid #d1d5db; /* 非常に薄いグレーの枠線 (gray-300) */
+            border: 1px solid #d1d5db;
         }
 
-        /* プログレスバーの進行部分 (バッテリーの残量) */
         #progress-bar {
             height: 100%;
-            background-color: #000000; /* 黒の残量 */
+            background-color: #000000; 
             border-radius: 3px; 
-            /* 10日刻みの動きなので、アニメーションは滑らかではなく、瞬間的な変化にします */
             transition: width 0.5s ease-out; 
         }
+        .card-glass {
+  background: var(--bg-color);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+}
+body.bg-dark {
+  --page-overlay-color: rgba(255, 255, 255, 0.3);
+}
+body.bg-mix {
+  --page-overlay-color: rgba(255, 255, 255, 0.3);
+}
+body.bg-light {
+  --page-overlay-color: rgba(255, 255, 255, 0.3);
+}
+
     </style>
     <script>
         tailwind.config = {
@@ -83,16 +91,12 @@
 </head>
 <body class="min-h-screen flex flex-col items-center bg-gray-100 overflow-hidden relative text-primary-text">
 
-    <!-- ほこりエフェクトのコンテナ -->
     <div id="dust-container" class="absolute inset-0"></div>
 
-    <!-- 窓からの光シミュレーション -->
     <div class="sunlight-overlay"></div>
 
-    <!-- 2. メインコンテンツコンテナ -->
     <main class="flex-grow flex flex-col justify-center items-center w-full max-w-4xl z-20 px-4 md:px-8 py-16">
         
-        <!-- タイトルエリア -->
         <div class="text-center mb-16">
             <h1 class="text-5xl md:text-7xl font-light tracking-widest mb-4 text-primary-text">
                 QUICK <br>INSTANT <br>LOUNGE
@@ -102,22 +106,18 @@
             </p>
         </div>
 
-        <!-- プログレスバーエリア -->
-        <div class="w-full max-w-md p-6 bg-white shadow-xl border border-gray-200 rounded-lg">
+        <div class="w-full max-w-md p-6 bg-white shadow-xl border border-gray-200 rounded-lg card-glass">
 
-            <!-- プログレスバーの実装 -->
             <div id="progress-track">
                 <div id="progress-bar" style="width: 0%;"></div>
             </div>
         </div>
         
-        <!-- 3. 移行メッセージとリンク (オープン後) -->
         <div id="redirect-message" class="hidden text-center mt-12">
             <p class="text-xl md:text-2xl font-semibold mb-6 text-accent">
                 おかえり、待ってたよ。
             </p>
-            <!-- リンクボタン -->
-            <a href="https://hogus.work" class="inline-flex items-center bg-accent text-white font-bold py-3 px-8 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105 shadow-md text-base">
+            <a href="https://hogus.work" class="inline-flex items-center bg-accent text-white font-bold py-3 px-8 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105 shadow-md text-base card-glass">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.812a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
                 移動
             </a>
@@ -130,63 +130,46 @@
     </main>
 
     <script>
-        // --- 設定 ---
-        // ターゲット日時: 2026/2/26 0:00 JST 
+
         const TARGET_DATE_JST = new Date("2026-02-26T00:00:00+09:00").getTime();
         
-        // 進捗バー計算のための開始日時を 2025年12月1日 0:00 JST に変更
         const START_DATE_JST = new Date("2025-12-01T00:00:00+09:00").getTime();
         
         const DUST_PARTICLE_COUNT = 60; 
 
-        // --- DOM要素 ---
         const progressBar = document.getElementById('progress-bar');
         const redirectMessageEl = document.getElementById('redirect-message');
         const dustContainer = document.getElementById('dust-container');
 
-        // 全期間をミリ秒と日数で計算
         const TOTAL_DURATION_MS = TARGET_DATE_JST - START_DATE_JST;
-        // 全期間の日数 (進捗計算に使用)
         const TOTAL_DURATION_DAYS = TOTAL_DURATION_MS / (1000 * 60 * 60 * 24);
 
-        // --- カウントダウン＆プログレスバーロジック ---
         function updateProgress() {
             const now = new Date().getTime();
-            const distance = TARGET_DATE_JST - now; // 残りミリ秒
-            
-            // ゼロパディング関数
+            const distance = TARGET_DATE_JST - now;
             const pad = (num) => String(num).padStart(2, '0');
 
             if (distance < 0) {
-                // 期限を過ぎた場合
                 clearInterval(interval);
                 
                 progressBar.style.width = '100%';
 
-                // メッセージを更新
                 timeRemainingEl.textContent = '0 Days 00:00:00 Remaining';
                 
                 redirectMessageEl.classList.remove('hidden');
 
             } else {
-                // 1. プログレスバーの計算 (10日刻みロジック)
-                
-                // 正確な残り日数（小数を含む）
+
                 const exactDaysRemaining = distance / (1000 * 60 * 60 * 24);
 
-                // 残り日数を10日単位に切り上げた値 (刻み幅の決定)
-                // 例: 残り31日 -> 40日として計算。残り30日 -> 30日として計算。
                 const snappedDaysRemaining = Math.ceil(exactDaysRemaining / 10) * 10;
                 
-                // 進捗率: (全期間の日数 - 刻み幅の日数) / 全期間の日数
                 let progressPercentage = ((TOTAL_DURATION_DAYS - snappedDaysRemaining) / TOTAL_DURATION_DAYS) * 100;
                 
-                // 0%から100%の範囲に制限
                 progressPercentage = Math.max(0, Math.min(100, progressPercentage));
                 
                 progressBar.style.width = `${progressPercentage.toFixed(2)}%`;
 
-                // 2. 残り時間の計算と表示 (正確な時間表示を維持)
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -196,13 +179,12 @@
             }
         }
 
-        // --- ほこりエフェクト生成ロジック ---
         function createDustParticles() {
             for (let i = 0; i < DUST_PARTICLE_COUNT; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('dust-particle');
 
-                // ランダムな位置、サイズ、アニメーション速度を設定
+            
                 const size = Math.random() * 2 + 1; 
                 const duration = Math.random() * 10 + 15; 
                 const delay = Math.random() * duration * -1; 
@@ -218,17 +200,17 @@
             }
         }
 
-        // --- 初期化 ---
+        
         window.onload = function() {
-            // 初回実行
+            
             updateProgress();
-            // 1秒ごとに更新
+            
             const interval = setInterval(updateProgress, 1000);
             
-            // ほこりエフェクトの生成
+            
             createDustParticles();
         };
-        
+
     </script>
 </body>
 </html>
