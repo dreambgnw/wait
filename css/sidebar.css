@@ -1,13 +1,25 @@
-/* PCサイドバー専用スタイル (Final Version) */
+/* PCサイドバー専用スタイル (Inverted Theme Version)
+   - ライトモード: メイン(白) / サイドバー(黒)
+   - ダークモード: メイン(黒) / サイドバー(白)
+*/
 
-/* --- 1. 色とフォントの強制統一 --- */
+/* --- 1. 配色変数の定義 --- */
 :root {
-    --pico-primary: #ffffff !important;
-    --pico-primary-background: #ffffff !important;
-    --pico-primary-underline: #ffffff !important;
-    --pico-primary-hover: #cccccc !important;
-    --pico-color: #ffffff !important; /* 基本文字色も白に */
-    --pico-muted-color: #888888 !important;
+    /* デフォルト（ライトモード用）: サイドバーは黒 */
+    --sidebar-bg: #050505;
+    --sidebar-text: #ffffff;
+    --sidebar-muted: #888888;
+    --sidebar-line: #444444;
+}
+
+/* ダークモード用: サイドバーは白（逆転） */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sidebar-bg: #ffffff;
+        --sidebar-text: #000000;
+        --sidebar-muted: #666666;
+        --sidebar-line: #cccccc;
+    }
 }
 
 /* --- 2. レイアウト (Mobile First) --- */
@@ -19,13 +31,16 @@
         flex-direction: column;
         /* 余白調整: 上下にたっぷり、左は適度に */
         padding: 6rem 0 6rem 4rem; 
-        background-color: #050505;
+        background-color: var(--sidebar-bg); /* 変数を使用 */
         position: relative;
         height: 100vh;
         box-sizing: border-box; 
         align-items: flex-start; /* 左揃え */
         min-width: 320px;
         z-index: 10;
+        
+        /* テキスト色を一括指定 */
+        color: var(--sidebar-text);
     }
 }
 
@@ -38,7 +53,7 @@
     margin-bottom: 4rem; /* メニューとの距離 */
     line-height: 1;
     display: block;
-    color: #ffffff !important;
+    color: var(--sidebar-text) !important; /* 変数を使用 */
     text-decoration: none;
     cursor: default; /* 置物化 */
 }
@@ -59,8 +74,8 @@
     font-size: 1.2rem; 
     letter-spacing: 0.2em; /* 字間を広げて高級感 */
     text-transform: uppercase;
-    font-weight: 700; /* ★重要: 太字でクッキリ */
-    color: #ffffff !important;
+    font-weight: 700; /* 太字でクッキリ */
+    color: var(--sidebar-text) !important; /* 変数を使用 */
     transition: opacity 0.3s, transform 0.3s;
     display: inline-block;
     opacity: 1.0; /* デフォルトはハッキリ */
@@ -73,8 +88,6 @@
 
 .nav-links a.active {
     opacity: 1.0;
-    /* アクティブ時は下線などを引くか、そのままかはお好みで */
-    /* text-decoration: underline; */
 }
 
 /* --- 5. サブリンク (Signal) --- */
@@ -89,7 +102,7 @@
 
 .sub-links a {
     text-decoration: none;
-    color: #888888 !important; /* グレー */
+    color: var(--sidebar-muted) !important; /* 変数を使用 */
     font-family: monospace; /* フォントを変えてアクセント */
     font-size: 0.9rem;
     letter-spacing: 0.1em;
@@ -97,14 +110,14 @@
 }
 
 .sub-links a:hover {
-    color: #ffffff !important;
+    color: var(--sidebar-text) !important;
 }
 
 /* --- 6. 時計エリア --- */
 .clock-area {
     font-family: monospace;
     font-size: 0.85rem;
-    color: #666666;
+    color: var(--sidebar-muted);
     letter-spacing: 0.15em;
     margin-top: auto; /* 一番下に配置 */
     display: flex;
@@ -118,5 +131,5 @@
     display: block;
     width: 40px;
     height: 1px;
-    background-color: #444444;
+    background-color: var(--sidebar-line); /* 変数を使用 */
 }
