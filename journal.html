@@ -3,45 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> LOUNGE -> Journal | QUICK INSTANT</title>
+    <title>Journal | QUICK INSTANT LOUNGE.</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    
+    <!-- CSS読み込み順序: Sidebar -> Journal -->
+    <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
 
-    <!-- メインコンテンツ -->
-    <main class="container">
+    <div class="split-layout">
         
-        <div class="page-header">
-            <h1 class="page-title">Journal</h1>
-            <p class="page-subtitle">Thoughts, Notes, and Records.</p>
-        </div>
-
-        <!-- 記事ループ (Hugoではここをrangeで回す) -->
-        <div class="post-list">
+        <!-- ▼ 左サイドバー (js/sidebar-loader.js が挿入) -->
+        
+        <!-- ▼ 右コンテンツエリア -->
+        <main class="content-area">
             
-            <a href="https://hogus.work/article/na2025-repo" class="post-item">
-                <span class="post-meta">2025.12.01 / Report</span>
-                <h2 class="post-title">Nostrasia2025 会場レポ</h2>
-                <p class="post-summary">どうも</p>
-            </a>
-<!--
-            <a href="https://hogus.work/article/nos2025-adcal" class="post-item">
-                <span class="post-meta">2025.12.12 / Nostr</span>
-                <h2 class="post-title">Nostr、一年のまとめ。</h2>
-                <p class="post-summary">どうも</p>
-            </a>
--->
-        </div>
+            <div class="page-header">
+                <h1 class="page-title">Journal</h1>
+                <p class="page-subtitle">Thoughts, Notes, and Records.</p>
+            </div>
 
-    </main>
+            <div class="post-list">
+                
+                <a href="https://hogus.work/article/na2025-repo" class="post-item">
+                    <span class="post-meta">2025.12.01 / Report</span>
+                    <h2 class="post-title">Nostrasia2025 会場レポ</h2>
+                    <p class="post-summary">会場の熱気と、裏側で起きていた小さな出来事についての個人的な記録。</p>
+                </a>
 
-    <footer class="container" style="padding: 2rem 0; border-top: 1px solid var(--pico-border-color); margin-top: 4rem;">
-        <small style="color: var(--pico-muted-color);">&copy; 2025 Hogus</small>
-    </footer>
+                <a href="#" class="post-item">
+                    <span class="post-meta">2025.11.15 / Photography</span>
+                    <h2 class="post-title">雨の日の珈琲とレンズの曇り</h2>
+                    <p class="post-summary">湿気の多い日は、現像した写真にもどこか重たい空気が映り込む気がする。新しい35mmレンズを持って路地裏を歩いた。</p>
+                </a>
+                
+                <a href="#" class="post-item">
+                    <span class="post-meta">2025.10.30 / Gear</span>
+                    <h2 class="post-title">Leica M6という選択</h2>
+                    <p class="post-summary">なぜ今、フィルムカメラなのか。不便さを愛することについての考察。</p>
+                </a>
 
-<!-- Mobile Navigation Loader -->
-<script src="js/nav-loader.js"></script>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- PC用サイドバー読み込み -->
+    <script src="js/sidebar-loader.js"></script>
+    <!-- スマホ用メニュー読み込み -->
+    <script src="js/nav-loader.js"></script>
 
 </body>
 </html>

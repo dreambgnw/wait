@@ -1,0 +1,115 @@
+/* PCサイドバー専用スタイル
+  Journal, Gallery, Index で共通使用
+*/
+
+/* スマホでは非表示 */
+.text-area {
+    display: none; 
+}
+
+/* PCサイズ (992px以上) */
+@media (min-width: 992px) {
+    .text-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* index.htmlのデザイン踏襲 */
+        padding: 4rem 0 4rem 4rem; 
+        background-color: var(--pico-background-color);
+        position: relative;
+        height: 100vh; /* 高さ一杯 */
+        box-sizing: border-box;
+    }
+}
+
+/* --- サイドバー内パーツ --- */
+
+/* ロゴ */
+.site-logo {
+    font-family: serif;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    line-height: 1;
+    display: block;
+    color: var(--pico-color);
+    text-decoration: none;
+}
+
+/* ナビゲーション */
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    font-family: serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--pico-color);
+    transition: opacity 0.3s, padding-left 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    opacity: 0.5; /* デフォルトは少し薄く */
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+    padding-left: 10px;
+}
+
+/* 現在のページのリンク (sidebar-loader.jsで付与) */
+.nav-links a.active {
+    opacity: 1;
+    font-weight: 700;
+    /* padding-left: 10px; アクティブ時は動かさない方が静謐かも */
+}
+
+
+/* サブリンク (Signalなど) */
+.sub-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.sub-links a {
+    text-decoration: none;
+    color: var(--pico-muted-color);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+}
+.sub-links a:hover {
+    color: var(--pico-color);
+}
+
+
+/* 時計エリア */
+.clock-area {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--pico-muted-color);
+    letter-spacing: 0.1em;
+    margin-top: auto;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.clock-area::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 1px;
+    background-color: var(--pico-muted-color);
+}

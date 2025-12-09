@@ -3,63 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> LOUNGE -> Gallery | QUICK INSTANT</title>
+    <title>Gallery | QUICK INSTANT LOUNGE.</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    
+    <!-- CSS読み込み順序: Sidebar -> Gallery -->
+    <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
 
-    <main class="container">
+    <div class="split-layout">
         
-        <div style="margin-bottom: 3rem;">
-            <h1 style="font-family: serif; margin-bottom: 0;">Gallery</h1>
-        </div>
+        <!-- ▼ 左サイドバー -->
+        <!-- js/sidebar-loader.js がここに自動的に <div class="text-area">...</div> を挿入します -->
 
-        <div class="gallery-grid">
+        <!-- ▼ 右コンテンツエリア -->
+        <main class="content-area">
             
-            <!-- 写真アイテム 1 -->
-            <a href="https://hogus.work/article/na2025-repo/" class="gallery-item">
-                <div class="image-wrapper">
-                    <img src="https://image.nostr.build/aa875ac99ca1d41e2395828ca964f27716525c25c3482ce6815b45aaabc4aba1.png" alt="Nature" class="gallery-img">
-                </div>
-                <div class="gallery-caption">
-                    <span>Nostrasia 2025 Wallpaper 1</span>
-                    <span>2025</span>
-                </div>
-            </a>
+            <h1 class="page-title">Gallery</h1>
 
-            <!-- 写真アイテム 2 -->
-            <a href="https://nostx.io/npub1hgsrc67xavwvxr26qu30axmedgtcca0gdtj8qe7e0zh09267agzqh967t0" class="gallery-item">
-                <div class="image-wrapper">
-                    <img src="https://image.nostr.build/0ae55ba95e0a044bf07c2489c1c7ecf64e93c406e6cce5e452e2c10a35fdfecc.png" alt="Space" class="gallery-img">
-                </div>
-                <div class="gallery-caption">
-                    <span>Hogus Banner</span>
-                    <span>2025</span>
-                </div>
-            </a>
+            <div class="gallery-grid">
+                
+                <a href="https://hogus.work/article/na2025-repo/" class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="https://image.nostr.build/aa875ac99ca1d41e2395828ca964f27716525c25c3482ce6815b45aaabc4aba1.png" alt="Nature" class="gallery-img">
+                    </div>
+                    <div class="gallery-caption">
+                        <span>Nostrasia 2025 Wallpaper</span>
+                        <span>2025</span>
+                    </div>
+                </a>
 
-            <!-- 写真アイテム 3 -->
-            <a href="https://www.sony.jp/ichigan/products/SLT-A58/" class="gallery-item">
-                <div class="image-wrapper">
-                    <img src="https://image.nostr.build/a21133ba8e14d6d665e29b4b4fd972db13e14a80b6f14a3b3b3aceb3c612ee10.jpg" alt="Urban" class="gallery-img">
-                </div>
-                <div class="gallery-caption">
-                    <span>Smokes</span>
-                    <span>2023</span>
-                </div>
-            </a>
+                <a href="#" class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="https://image.nostr.build/0ae55ba95e0a044bf07c2489c1c7ecf64e93c406e6cce5e452e2c10a35fdfecc.png" alt="Space" class="gallery-img">
+                    </div>
+                    <div class="gallery-caption">
+                        <span>Hogus Banner</span>
+                        <span>2025</span>
+                    </div>
+                </a>
 
-        </div>
+                <a href="#" class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="https://image.nostr.build/a21133ba8e14d6d665e29b4b4fd972db13e14a80b6f14a3b3b3aceb3c612ee10.jpg" alt="Urban" class="gallery-img">
+                    </div>
+                    <div class="gallery-caption">
+                        <span>Smokes</span>
+                        <span>2023</span>
+                    </div>
+                </a>
+                
+                <a href="#" class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2674&auto=format&fit=crop" alt="Forest" class="gallery-img">
+                    </div>
+                    <div class="gallery-caption">
+                        <span>Deep Forest</span>
+                        <span>2024</span>
+                    </div>
+                </a>
 
-    </main>
+            </div>
 
-    <footer class="container" style="padding: 2rem 0; margin-top: 4rem;">
-        <small style="color: var(--pico-muted-color);">&copy; 2023 Quick Instant Lounge.</small>
-    </footer>
+        </main>
+    </div>
 
-<!-- Mobile Navigation Loader -->
-<script src="js/nav-loader.js"></script>
+    <!-- PC用サイドバー読み込み -->
+    <script src="js/sidebar-loader.js"></script>
+
+    <!-- スマホ用メニュー読み込み -->
+    <script src="js/nav-loader.js"></script>
 
 </body>
 </html>

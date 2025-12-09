@@ -1,0 +1,36 @@
+<!-- 
+  PC用サイドバーコンポーネント
+  js/sidebar-loader.js によって読み込まれます
+-->
+<div class="text-area">
+    <div>
+        <!-- ロゴ -->
+        <header>
+            <a href="index.html" class="site-logo">Lounge.</a>
+        </header>
+
+        <!-- メインナビ -->
+        <nav>
+            <ul class="nav-links">
+                <!-- 
+                   js/sidebar-loader.js が現在のURLを判定して
+                   自動的に class="active" を付与します
+                -->
+                <li><a href="index.html">Home</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+
+            <!-- サブナビ -->
+            <ul class="sub-links">
+                <li><a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank">Signal</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- 時計 -->
+    <div class="clock-area">
+        <span id="sidebar-date"></span>
+        <span id="sidebar-time"></span>
+    </div>
+</div>

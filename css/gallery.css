@@ -1,96 +1,113 @@
-       /* --- 共通デザイン（Topページから継承） --- */
-        :root {
-            --pico-primary: #000000;
-            --pico-primary-background: #000000;
-            --pico-primary-underline: #000000;
-            --pico-primary-hover: #333333;
-            --pico-background-color: #ffffff;
-            --pico-color: #1a1a1a;
-            --pico-muted-color: #666666;
-            --pico-border-color: #e5e5e5;
-        }
+/* --- 共通デザイン --- */
+:root {
+    --pico-primary: #000000;
+    --pico-primary-background: #000000;
+    --pico-primary-underline: #000000;
+    --pico-primary-hover: #333333;
+    --pico-primary-focus: rgba(0, 0, 0, 0.125);
+    --pico-background-color: #ffffff;
+    --pico-color: #1a1a1a;
+    --pico-muted-color: #666666;
+    --pico-border-color: #e5e5e5;
+}
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --pico-background-color: #111111;
-                --pico-color: #f0f0f0;
-                --pico-primary: #ffffff;
-                --pico-muted-color: #888888;
-                --pico-border-color: #333333;
-            }
-        }
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pico-background-color: #050505;
+        --pico-color: #f0f0f0;
+        --pico-primary: #ffffff;
+        --pico-muted-color: #777;
+        --pico-border-color: #333333;
+    }
+}
 
-        body {
-            font-family: "Helvetica Neue", Arial, sans-serif;
-        }
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
 
-        /* ヘッダー周り */
-        .site-header {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .header-logo {
-            font-family: serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--pico-color);
-            text-decoration: none;
-        }
+a { text-decoration: none; color: inherit; }
 
-        .header-nav a {
-            color: var(--pico-muted-color);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.2s;
-        }
-        .header-nav a:hover, .header-nav a.active {
-            color: var(--pico-color);
-        }
 
-        /* --- ギャラリーグリッド --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 幅に合わせて自動折り返し */
-            gap: 2rem; /* 写真間の余白 */
-        }
+/* --- レイアウト構造 (Mobile First) --- */
+.split-layout {
+    width: 100%;
+    min-height: 100vh;
+}
 
-        .gallery-item {
-            display: block;
-            text-decoration: none;
-        }
+/* .text-area (サイドバー) のスタイルは sidebar.css に移動しました */
 
-        .image-wrapper {
-            width: 100%;
-            aspect-ratio: 4/3; /* 写真の比率を統一 */
-            overflow: hidden;
-            background-color: #f0f0f0;
-            margin-bottom: 0.5rem;
-        }
+.content-area {
+    padding: 2rem 1.5rem 8rem;
+    width: 100%;
+}
 
-        .gallery-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease, filter 0.6s ease;
-            filter: grayscale(100%); /* デフォルトは白黒 */
-        }
 
-        /* ホバー時のエフェクト: カラー化 + ズーム */
-        .gallery-item:hover .gallery-img {
-            filter: grayscale(0%);
-            transform: scale(1.05);
-        }
+/* --- PC用レイアウト (992px以上) --- */
+@media (min-width: 992px) {
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
 
-        .gallery-caption {
-            font-size: 0.8rem;
-            color: var(--pico-muted-color);
-            font-family: monospace;
-            margin-top: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-        }
+    .split-layout {
+        display: grid;
+        grid-template-columns: 4fr 6fr; /* index.htmlと同じ比率 */
+        height: 100vh;
+        align-items: stretch;
+    }
+
+    /* .text-area のスタイルは sidebar.css へ */
+
+    /* 右コンテンツエリア */
+    .content-area {
+        padding: 4rem 4rem;
+        overflow-y: auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+/* --- ギャラリーグリッド --- */
+.page-title { font-family: serif; font-size: 3rem; margin-bottom: 2rem; line-height: 1.1; }
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background-color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    filter: grayscale(100%);
+}
+
+.gallery-item:hover .gallery-img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.gallery-caption {
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+    font-family: monospace;
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}

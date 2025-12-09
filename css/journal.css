@@ -1,105 +1,102 @@
-        /* --- 共通デザイン（Topページから継承） --- */
-        :root {
-            --pico-primary: #000000;
-            --pico-primary-background: #000000;
-            --pico-primary-underline: #000000;
-            --pico-primary-hover: #333333;
-            --pico-primary-focus: rgba(0, 0, 0, 0.125);
-            --pico-background-color: #ffffff;
-            --pico-color: #1a1a1a;
-            --pico-muted-color: #666666;
-            --pico-border-color: #e5e5e5;
-        }
+/* --- 共通デザイン --- */
+:root {
+    --pico-primary: #000000;
+    --pico-primary-background: #000000;
+    --pico-primary-underline: #000000;
+    --pico-primary-hover: #333333;
+    --pico-primary-focus: rgba(0, 0, 0, 0.125);
+    --pico-background-color: #ffffff;
+    --pico-color: #1a1a1a;
+    --pico-muted-color: #666666;
+    --pico-border-color: #e5e5e5;
+}
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --pico-background-color: #111111;
-                --pico-color: #f0f0f0;
-                --pico-primary: #ffffff;
-                --pico-muted-color: #888888;
-                --pico-border-color: #333333;
-            }
-        }
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pico-background-color: #050505;
+        --pico-color: #e0e0e0;
+        --pico-primary: #ffffff;
+        --pico-muted-color: #777;
+        --pico-border-color: #333333;
+    }
+}
 
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-        }
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
 
-        /* --- ヘッダー（ナビゲーション） --- */
-        .site-header {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--pico-border-color);
-            margin-bottom: 4rem;
-        }
+a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+a:hover { opacity: 0.7; }
 
-        .header-logo {
-            font-family: serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--pico-color);
-            text-decoration: none;
-        }
 
-        .header-nav a {
-            color: var(--pico-muted-color);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.2s;
-        }
+/* --- レイアウト構造 (Mobile First) --- */
+.split-layout {
+    width: 100%;
+    min-height: 100vh;
+}
 
-        .header-nav a:hover,
-        .header-nav a.active {
-            color: var(--pico-color);
-        }
+/* .text-area は sidebar.css へ移動 */
 
-        /* --- 記事リスト --- */
-        .post-item {
-            margin-bottom: 4rem;
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.3s;
-        }
+.content-area {
+    padding: 2rem 1.5rem 8rem;
+    width: 100%;
+}
 
-        .post-item:hover {
-            opacity: 0.7;
-        }
 
-        .post-meta {
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: var(--pico-muted-color);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
+/* --- PC用レイアウト (992px以上) --- */
+@media (min-width: 992px) {
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
 
-        .post-title {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            line-height: 1.2;
-        }
+    .split-layout {
+        display: grid;
+        grid-template-columns: 350px 1fr; /* Journalはサイドバー幅固定でもOK */
+        height: 100vh;
+    }
 
-        .post-summary {
-            color: var(--pico-muted-color);
-            line-height: 1.6;
-            margin: 0;
-        }
+    /* .text-area は sidebar.css へ */
 
-        /* ページタイトルエリア */
-        .page-header {
-            margin-bottom: 4rem;
-        }
-        .page-title {
-            font-family: serif;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        .page-subtitle {
-            color: var(--pico-muted-color);
-            font-family: monospace;
-        }
+    /* 右コンテンツエリア */
+    .content-area {
+        padding: 4rem 6rem;
+        overflow-y: auto;
+        height: 100vh;
+    }
+}
+
+/* --- Journal コンテンツスタイル --- */
+.page-header { margin-bottom: 4rem; }
+.page-title { font-family: serif; font-size: 3rem; margin-bottom: 0.5rem; line-height: 1.1; }
+.page-subtitle { color: var(--pico-muted-color); font-family: monospace; font-size: 0.9rem; }
+
+.post-item {
+    display: block;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--pico-border-color);
+}
+.post-meta {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+    margin-bottom: 0.8rem;
+    display: block;
+}
+.post-title {
+    font-family: serif;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+.post-summary {
+    color: var(--pico-muted-color);
+    line-height: 1.8;
+    margin: 0;
+    font-size: 0.95rem;
+}
