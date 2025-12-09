@@ -4,27 +4,29 @@
 */
 
 :root {
-    --pico-primary: #000000;
-    --pico-primary-background: #000000;
-    --pico-primary-underline: #000000;
-    --pico-primary-hover: #333333;
-    --pico-primary-focus: rgba(0, 0, 0, 0.125);
-    --pico-primary-inverse: #ffffff;
-    --pico-background-color: #ffffff;
-    --pico-color: #1a1a1a;
-    --pico-muted-color: #666666;
-    --pico-border-color: #e5e5e5;
+    /* ライトモード時の設定（!importantで強制適用） */
+    --pico-primary: #000000 !important;
+    --pico-primary-background: #000000 !important;
+    --pico-primary-underline: #000000 !important;
+    --pico-primary-hover: #333333 !important;
+    --pico-primary-focus: rgba(0, 0, 0, 0.125) !important;
+    --pico-primary-inverse: #ffffff !important;
+    --pico-background-color: #ffffff !important; /* 背景を真っ白に */
+    --pico-color: #1a1a1a !important;
+    --pico-muted-color: #666666 !important;
+    --pico-border-color: #e5e5e5 !important;
 }
 
 /* ダークモード対応 */
 @media (prefers-color-scheme: dark) {
     :root {
         /* 背景色をサイドバーと統一して、より深い黒に変更 */
-        --pico-background-color: #050505;
-        --pico-color: #f0f0f0;
-        --pico-primary: #ffffff;
-        --pico-muted-color: #888888;
-        --pico-border-color: #333333;
+        /* !important を追加してPico.cssのデフォルト色を強制上書き */
+        --pico-background-color: #050505 !important;
+        --pico-color: #f0f0f0 !important;
+        --pico-primary: #ffffff !important;
+        --pico-muted-color: #888888 !important;
+        --pico-border-color: #333333 !important;
     }
 }
 
@@ -37,6 +39,8 @@ body {
     align-items: center;
     justify-content: center;
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    /* 明示的に背景色を指定して、変数の適用漏れを防ぐ */
+    background-color: var(--pico-background-color);
 }
 
 /* コンテナ */
