@@ -1,5 +1,5 @@
 /* PCサイドバー専用スタイル
-  Journal, Gallery, Index で共通使用
+  index.html (styles.css) の .text-area 関連のスタイルをそのまま移植
 */
 
 /* スマホでは非表示 */
@@ -12,17 +12,19 @@
     .text-area {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        /* index.htmlのデザイン踏襲 */
+        justify-content: space-between; /* 上下に要素を散らす */
+        /* index.html と同じパディング設定 */
         padding: 4rem 0 4rem 4rem; 
         background-color: var(--pico-background-color);
         position: relative;
-        height: 100vh; /* 高さ一杯 */
-        box-sizing: border-box;
+        height: 100vh;
+        /* レイアウト崩れ防止 */
+        box-sizing: border-box; 
+        align-items: flex-start;
     }
 }
 
-/* --- サイドバー内パーツ --- */
+/* --- サイドバー内パーツ (index.htmlと完全一致) --- */
 
 /* ロゴ */
 .site-logo {
@@ -32,7 +34,7 @@
     letter-spacing: 0.05em;
     margin-bottom: 2rem;
     line-height: 1;
-    display: block;
+    display: block; /* aタグでもブロック表示 */
     color: var(--pico-color);
     text-decoration: none;
 }
@@ -48,6 +50,7 @@
 }
 
 .nav-links a {
+    text-decoration: none;
     font-family: serif;
     font-size: 1.1rem;
     letter-spacing: 0.15em;
@@ -56,20 +59,17 @@
     color: var(--pico-color);
     transition: opacity 0.3s, padding-left 0.3s;
     display: inline-block;
-    text-decoration: none;
-    opacity: 0.5; /* デフォルトは少し薄く */
 }
 
 .nav-links a:hover {
-    opacity: 0.8;
+    opacity: 0.6;
     padding-left: 10px;
 }
 
-/* 現在のページのリンク (sidebar-loader.jsで付与) */
+/* アクティブリンクのスタイル（下層ページ用に追加） */
 .nav-links a.active {
-    opacity: 1;
     font-weight: 700;
-    /* padding-left: 10px; アクティブ時は動かさない方が静謐かも */
+    /* opacity: 1; */
 }
 
 
@@ -90,6 +90,7 @@
     letter-spacing: 0.1em;
     transition: color 0.3s;
 }
+
 .sub-links a:hover {
     color: var(--pico-color);
 }
@@ -97,15 +98,16 @@
 
 /* 時計エリア */
 .clock-area {
-    font-family: monospace;
+    font-family: monospace; /* 等幅フォントでデジタル時計っぽく */
     font-size: 0.9rem;
     color: var(--pico-muted-color);
     letter-spacing: 0.1em;
-    margin-top: auto;
+    margin-top: auto; /* 一番下に配置 */
     display: flex;
     gap: 1rem;
     align-items: center;
 }
+
 .clock-area::before {
     content: "";
     display: block;

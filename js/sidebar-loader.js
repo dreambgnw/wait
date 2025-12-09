@@ -1,5 +1,5 @@
 // サイドバーのHTMLをJS内に埋め込んだ「サーバー不要版」
-// file:// プロトコルでもCORSエラーになりません。
+// index.html の構造 (.text-area) をそのまま流用しています。
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -7,18 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.querySelector('.split-layout');
     if (!layout) return;
 
-    // 埋め込み用サイドバーHTML (index.htmlのデザインを踏襲)
+    // 埋め込み用サイドバーHTML (index.htmlのデザインを完全再現)
     const sidebarHTML = `
     <div class="text-area">
         <div>
             <!-- ロゴ -->
             <header>
+                <!-- index.htmlではdivでしたが、戻れるようにaタグにしています。見た目は同じです -->
                 <a href="index.html" class="site-logo">Lounge.</a>
             </header>
 
             <!-- メインナビ -->
             <nav>
                 <ul class="nav-links">
+                    <!-- 下層ページなのでHomeを追加 -->
                     <li><a href="index.html">Home</a></li>
                     <li><a href="journal.html">Journal</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </nav>
         </div>
 
-        <!-- 時計 -->
+        <!-- 待合室の時計 (IDはJS制御用に sidebar- を付与していますが、クラス構成は同じです) -->
         <div class="clock-area">
             <span id="sidebar-date"></span>
             <span id="sidebar-time"></span>
@@ -61,7 +63,6 @@ function initActiveLink() {
     
     links.forEach(link => {
         const href = link.getAttribute('href');
-        // hrefが現在のファイル名を含んでいれば active
         if (href === currentPath || (currentPath === '' && href === 'index.html')) {
             link.classList.add('active');
         } else {
