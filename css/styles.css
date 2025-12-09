@@ -19,7 +19,8 @@
 /* ダークモード対応 */
 @media (prefers-color-scheme: dark) {
     :root {
-        --pico-background-color: #111111;
+        /* 背景色をサイドバーと統一して、より深い黒に変更 */
+        --pico-background-color: #050505;
         --pico-color: #f0f0f0;
         --pico-primary: #ffffff;
         --pico-muted-color: #888888;
