@@ -14,60 +14,62 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --pico-background-color: #050505;
-        --pico-color: #e0e0e0;
+        --pico-color: #f0f0f0;
         --pico-primary: #ffffff;
         --pico-muted-color: #777;
         --pico-border-color: #333333;
     }
 }
 
+/* スマホ用デフォルト */
 body {
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     margin: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden;
 }
 
 a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
 a:hover { opacity: 0.7; }
 
-
-/* --- レイアウト構造 (Mobile First) --- */
+/* スマホ用レイアウト */
 .split-layout {
     width: 100%;
     min-height: 100vh;
 }
-
-/* ★重要修正★
-   ここに書いてあった .text-area { display: none; } は削除しました。
-   サイドバーの表示・非表示はすべて sidebar.css で管理します。
-*/
-
 .content-area {
     padding: 2rem 1.5rem 8rem;
     width: 100%;
 }
 
-
-/* --- PC用レイアウト (992px以上) --- */
+/* --- PC用レイアウト (index.htmlと統一) --- */
 @media (min-width: 992px) {
     body {
+        /* 画面中央に配置する設定 */
         height: 100vh;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--pico-background-color);
     }
 
     .split-layout {
         display: grid;
-        grid-template-columns: 4fr 6fr; 
-        height: 100vh;
+        grid-template-columns: 4fr 6fr; /* 左4 : 右6 */
+        /* index.htmlと同じサイズ感に */
+        width: 100%;
+        max-width: 1400px;
+        height: 90vh;
+        padding: 0 2rem;
+        gap: 2rem;
     }
 
     /* 右コンテンツエリア */
     .content-area {
         padding: 4rem 6rem;
-        overflow-y: auto;
-        height: 100vh;
+        overflow-y: auto; /* ここだけスクロール */
+        height: 100%;     /* 親(90vh)いっぱいに */
         display: block; 
     }
 }

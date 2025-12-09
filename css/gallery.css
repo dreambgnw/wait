@@ -26,52 +26,50 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden;
 }
 
 a { text-decoration: none; color: inherit; }
 
-
-/* --- レイアウト構造 (Mobile First) --- */
+/* スマホ用レイアウト */
 .split-layout {
     width: 100%;
     min-height: 100vh;
 }
-
-/* .text-area (サイドバー) のスタイルは sidebar.css に移動しました */
-
 .content-area {
     padding: 2rem 1.5rem 8rem;
     width: 100%;
 }
 
-
-/* --- PC用レイアウト (992px以上) --- */
+/* --- PC用レイアウト (index.htmlと統一) --- */
 @media (min-width: 992px) {
     body {
         height: 100vh;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--pico-background-color);
     }
 
     .split-layout {
         display: grid;
-        grid-template-columns: 4fr 6fr; /* index.htmlと同じ比率 */
-        height: 100vh;
-        align-items: stretch;
+        grid-template-columns: 4fr 6fr;
+        /* index.htmlと同じサイズ感 */
+        width: 100%;
+        max-width: 1400px;
+        height: 90vh;
+        padding: 0 2rem;
+        gap: 2rem;
     }
 
-    /* .text-area のスタイルは sidebar.css へ */
-
-    /* 右コンテンツエリア */
     .content-area {
         padding: 4rem 4rem;
         overflow-y: auto;
-        height: 100vh;
+        height: 100%;
         display: flex;
         flex-direction: column;
     }
 }
-
 
 /* --- ギャラリーグリッド --- */
 .page-title { font-family: serif; font-size: 3rem; margin-bottom: 2rem; line-height: 1.1; }
