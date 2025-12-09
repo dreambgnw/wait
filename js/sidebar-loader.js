@@ -1,4 +1,5 @@
-// サイドバー(sidebar.html)を読み込んで表示し、機能させるスクリプト
+// サイドバーのHTMLをJS内に埋め込んだ「サーバー不要版」
+// file:// プロトコルでもCORSエラーになりません。
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -6,31 +7,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.querySelector('.split-layout');
     if (!layout) return;
 
-    // キャッシュ回避用
-    const v = new Date().getTime();
+    // 埋め込み用サイドバーHTML (index.htmlのデザインを踏襲)
+    const sidebarHTML = `
+    <div class="text-area">
+        <div>
+            <!-- ロゴ -->
+            <header>
+                <a href="index.html" class="site-logo">Lounge.</a>
+            </header>
 
-    fetch(`sidebar.html?v=${v}`)
-        .then(res => {
-            if (!res.ok) throw new Error('Sidebar load failed');
-            return res.text();
-        })
-        .then(html => {
-            // HTMLをDOM化
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-            
-            // sidebar.html内の .text-area を取り出す
-            const sidebar = tempDiv.querySelector('.text-area');
-            if (sidebar) {
-                // レイアウトの先頭(左側)に挿入
-                layout.prepend(sidebar);
-                
-                // 初期化処理
-                initActiveLink();
-                startSidebarClock();
-            }
-        })
-        .catch(err => console.error(err));
+            <!-- メインナビ -->
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+
+                <!-- サブナビ -->
+                <ul class="sub-links">
+                    <li><a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank">Signal</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 時計 -->
+        <div class="clock-area">
+            <span id="sidebar-date"></span>
+            <span id="sidebar-time"></span>
+        </div>
+    </div>
+    `;
+
+    // HTMLをDOM化して挿入
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = sidebarHTML;
+    
+    // .text-area を取り出してレイアウトの先頭に追加
+    const sidebar = tempDiv.querySelector('.text-area');
+    if (sidebar) {
+        layout.prepend(sidebar);
+        
+        // 初期化処理
+        initActiveLink();
+        startSidebarClock();
+    }
 });
 
 // 現在のページのリンクをハイライトする
