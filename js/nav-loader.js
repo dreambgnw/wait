@@ -1,5 +1,5 @@
 // mobile-nav.html を読み込まず、ここに直接HTMLを持たせた「サーバー不要版」スクリプト
-// これなら file:// プロトコルでもエラーになりません。
+// Tailwindの読み込み待ちによるチラつき(FOUC)を防止する即時CSSを追加済み
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -12,71 +12,149 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. メニューのHTML構造
+    // ★修正ポイント: <style>タグ内に、Tailwindを使わない「生のCSS」でレイアウトを定義。
+    // これにより、Tailwindのロードを待たずに即座に正しい見た目になります。
     const menuHTML = `
     <style>
-        @media (min-width: 1024px) {
-            .lg\\:hidden { display: none !important; }
+        /* 即時適用されるスタイル (Tailwind待ちの崩れ防止) */
+        
+        /* PC (1024px以上) では強制非表示 */
+        @media (min-width: 992px) {
+            .mobile-nav-root { display: none !important; }
+        }
+
+        /* スマホ用ボトムバーの基本スタイル */
+        .mobile-nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* アイコンボタンのリセット */
+        .icon-btn {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            width: auto !important;
+            height: auto !important;
+            cursor: pointer;
+            color: #9ca3af; /* gray-400 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-btn:hover { color: #ffffff; }
+
+        /* オーバーレイメニューの初期状態（隠す） */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(4px);
+            transform: translateY(100%); /* 下に隠しておく */
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* クラス付与で表示 */
+        .mobile-menu-overlay.open {
+            transform: translateY(0);
+        }
+
+        /* 検索オーバーレイ */
+        .search-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .search-overlay.active {
+            display: flex;
+            opacity: 1;
         }
     </style>
 
-    <!-- Bottom Bar (Fixed) -->
-    <div class="lg:hidden fixed bottom-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md">
-        <div class="flex items-center justify-between px-6 py-4">
-            
-            <!-- Logo (リンク削除 / 置物化) -->
-            <div class="font-serif text-xl font-bold tracking-wider text-white cursor-default">
-                Lounge.
-            </div>
-
-            <div class="flex items-center gap-6">
-                <!-- 
-                   ★修正: style属性を追加して、Pico.cssのデフォルトボタンスタイル(背景・枠線・影)を打ち消します
-                -->
-                <button onclick="window.toggleSearch()" class="text-gray-400 hover:text-white transition-colors flex items-center justify-center" aria-label="Search" style="background: transparent; border: none; padding: 0; box-shadow: none; width: auto; height: auto;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
+    <!-- ラッパー要素 (.mobile-nav-root) を追加してPCでの一括非表示を制御 -->
+    <div class="mobile-nav-root">
+        
+        <!-- Bottom Bar (Fixed) -->
+        <!-- Tailwindクラスも残しつつ、独自クラス(.mobile-nav-bar)で即時スタイル適用 -->
+        <div class="mobile-nav-bar">
+            <div class="flex items-center justify-between w-full">
                 
-                <button id="menu-btn" onclick="window.toggleMenu()" class="text-gray-400 hover:text-white transition-colors w-6 h-6 relative flex justify-center items-center z-50" aria-label="Menu" style="background: transparent; border: none; padding: 0; box-shadow: none; width: auto; height: auto;">
-                    <div class="w-6 flex flex-col items-end gap-1.5 transition-all duration-300">
-                        <span id="line1" class="block w-6 h-0.5 bg-current transition-all duration-300 origin-center"></span>
-                        <span id="line2" class="block w-4 h-0.5 bg-current transition-all duration-300 origin-center"></span>
-                    </div>
-                </button>
-            </div>
-        </div>
-    </div>
+                <!-- Logo -->
+                <div class="font-serif text-xl font-bold tracking-wider text-white cursor-default">
+                    Lounge.
+                </div>
 
-    <!-- Menu Overlay -->
-    <div id="mobile-menu" class="lg:hidden fixed inset-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-sm transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col">
-        <div class="flex-1 flex flex-col justify-center items-center pb-20 w-full overflow-y-auto">
-            <div id="menu-container" class="w-full flex justify-center p-4">
-                <nav class="flex flex-col items-center gap-8 text-xl font-serif tracking-widest text-gray-400">
-                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                    <a href="journal.html" class="hover:text-white transition-colors">Journal</a>
-                    <a href="gallery.html" class="hover:text-white transition-colors">Gallery</a>
-                    <a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank" class="hover:text-white transition-colors text-base opacity-80 mt-4">
-                        Signal
-                    </a>
-                </nav>
-            </div>
-            <div class="mt-12 pt-12 border-t border-white/10 w-40 text-center select-none">
-                <span id="clock-date" class="block text-xs text-gray-500 font-mono tracking-widest mb-1"></span>
-                <span id="clock-time" class="block text-sm text-gray-400 font-mono tracking-widest"></span>
+                <div class="flex items-center gap-6">
+                    <button onclick="window.toggleSearch()" class="icon-btn" aria-label="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    
+                    <button id="menu-btn" onclick="window.toggleMenu()" class="icon-btn z-50" aria-label="Menu">
+                        <div class="w-6 flex flex-col items-end gap-1.5 transition-all duration-300">
+                            <span id="line1" class="block w-6 h-0.5 bg-current transition-all duration-300 origin-center"></span>
+                            <span id="line2" class="block w-4 h-0.5 bg-current transition-all duration-300 origin-center"></span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Search Overlay -->
-    <div id="search-overlay" class="lg:hidden fixed inset-0 z-[60] bg-black/95 hidden flex items-center justify-center p-6 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="w-full max-w-md">
-            <form action="#" method="get" onsubmit="return false;">
-                <input type="text" name="q" placeholder="Search..." class="w-full bg-transparent border-b-2 border-white/30 text-2xl text-white py-2 focus:outline-none focus:border-white font-serif placeholder-gray-600 transition-colors">
-            </form>
-            <!-- Cancelボタンも念のためスタイル調整 -->
-            <button onclick="window.toggleSearch()" class="mt-8 text-sm text-gray-500 uppercase tracking-widest hover:text-white w-full text-center" style="background: transparent; border: none; box-shadow: none;">Cancel</button>
+        <!-- Menu Overlay -->
+        <div id="mobile-menu" class="mobile-menu-overlay">
+            <div class="flex-1 flex flex-col justify-center items-center pb-20 w-full overflow-y-auto">
+                <div id="menu-container" class="w-full flex justify-center p-4">
+                    <nav class="flex flex-col items-center gap-8 text-xl font-serif tracking-widest text-gray-400">
+                        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                        <a href="journal.html" class="hover:text-white transition-colors">Journal</a>
+                        <a href="gallery.html" class="hover:text-white transition-colors">Gallery</a>
+                        <a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank" class="hover:text-white transition-colors text-base opacity-80 mt-4">
+                            Signal
+                        </a>
+                    </nav>
+                </div>
+                <div class="mt-12 pt-12 border-t border-white/10 w-40 text-center select-none">
+                    <span id="clock-date" class="block text-xs text-gray-500 font-mono tracking-widest mb-1"></span>
+                    <span id="clock-time" class="block text-sm text-gray-400 font-mono tracking-widest"></span>
+                </div>
+            </div>
         </div>
+
+        <!-- Search Overlay -->
+        <div id="search-overlay" class="search-overlay">
+            <div class="w-full max-w-md">
+                <form action="#" method="get" onsubmit="return false;">
+                    <input type="text" name="q" placeholder="Search..." class="w-full bg-transparent border-b-2 border-white/30 text-2xl text-white py-2 focus:outline-none focus:border-white font-serif placeholder-gray-600 transition-colors">
+                </form>
+                <button onclick="window.toggleSearch()" class="mt-8 text-sm text-gray-500 uppercase tracking-widest hover:text-white w-full text-center icon-btn">Cancel</button>
+            </div>
+        </div>
+
     </div>
     `;
 
@@ -90,34 +168,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const line1 = document.getElementById('line1');
         const line2 = document.getElementById('line2');
         
-        const isClosed = menu.classList.contains('translate-y-full');
+        // クラス操作で開閉 (Tailwindクラスへの依存を削除)
+        const isOpen = menu.classList.contains('open');
         
-        if (isClosed) {
-            menu.classList.remove('translate-y-full');
+        if (isOpen) {
+            // 閉じる
+            menu.classList.remove('open');
+            line1.classList.remove('rotate-45', 'translate-y-2');
+            line2.classList.remove('w-4'); // 長さを戻す
+            line2.classList.add('w-4');    // 明示的に
+            line2.classList.remove('w-6', '-rotate-45');
+            document.body.style.overflow = ''; 
+        } else {
+            // 開く
+            menu.classList.add('open');
             line1.classList.add('rotate-45', 'translate-y-2');
             line2.classList.remove('w-4');
             line2.classList.add('w-6', '-rotate-45'); 
             document.body.style.overflow = 'hidden'; 
-        } else {
-            menu.classList.add('translate-y-full');
-            line1.classList.remove('rotate-45', 'translate-y-2');
-            line2.classList.add('w-4');
-            line2.classList.remove('w-6', '-rotate-45');
-            document.body.style.overflow = ''; 
         }
     };
 
     window.toggleSearch = function() {
         const search = document.getElementById('search-overlay');
-        const isHidden = search.classList.contains('hidden');
+        const isActive = search.classList.contains('active');
         
-        if (isHidden) {
-            search.classList.remove('hidden');
-            setTimeout(() => { search.classList.remove('opacity-0'); }, 10);
-            document.querySelector('#search-overlay input').focus();
+        if (isActive) {
+            // 閉じる
+            search.classList.remove('active');
+            setTimeout(() => { search.style.display = 'none'; }, 300);
         } else {
-            search.classList.add('opacity-0');
-            setTimeout(() => { search.classList.add('hidden'); }, 300);
+            // 開く
+            search.style.display = 'flex';
+            // 少し待ってからopacityを1にしてフェードインさせる
+            setTimeout(() => { search.classList.add('active'); }, 10);
+            const input = document.querySelector('#search-overlay input');
+            if(input) input.focus();
         }
     };
 
@@ -139,5 +225,5 @@ document.addEventListener('DOMContentLoaded', () => {
     updateClock();
     setInterval(updateClock, 1000);
 
-    console.log("Mobile Nav loaded successfully (Logo is non-clickable).");
+    console.log("Mobile Nav loaded successfully (Anti-FOUC Mode).");
 });
