@@ -1,242 +1,118 @@
-       :root {
-            --pico-primary: #000000;
-            --pico-primary-background: #000000;
-            --pico-primary-underline: #000000;
-            --pico-primary-hover: #333333;
-            --pico-primary-focus: rgba(0, 0, 0, 0.125);
-            --pico-primary-inverse: #ffffff;
-            --pico-background-color: #ffffff;
-            --pico-color: #1a1a1a;
-            --pico-muted-color: #666666;
-            --pico-border-color: #e5e5e5;
-        }
+/* Topページ固有のスタイル
+  ※サイドバー関連の記述は css/sidebar.css に移動したため削除しました。
+  ここでは全体のレイアウトと右側のビジュアルエリアのみ定義します。
+*/
 
-        /* ダークモード対応 */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --pico-background-color: #111111;
-                --pico-color: #f0f0f0;
-                --pico-primary: #ffffff;
-                --pico-muted-color: #888888;
-                --pico-border-color: #333333;
-            }
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden; /* スクロールを消してアプリっぽく */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-        }
-
-        /* コンテナ */
-        .main-container {
-            width: 100%;
-            max-width: 1400px;
-            height: 90vh;
-            display: grid;
-            grid-template-columns: 1fr;
-            padding: 0 2rem;
-            gap: 2rem;
-        }
-
-        /* PC以上で左右分割 */
-        @media (min-width: 992px) {
-            .main-container {
-                grid-template-columns: 4fr 6fr; /* 左4 : 右6 */
-                align-items: center;
-            }
-        }
-
-        /* --- 左側：テキストエリア --- */
-        .text-area {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* 上下に要素を散らす */
-            height: 100%;
-            padding: 2rem 0;
-            position: relative;
-        }
-
-        @media (min-width: 992px) {
-            .text-area {
-                padding: 4rem 0 4rem 4rem;
-                align-items: flex-start;
-            }
-        }
-
-        /* ロゴ */
-        .site-logo {
-            font-family: serif;
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-bottom: 2rem;
-            line-height: 1;
-        }
-
-        /* ナビゲーションリンク (Main) */
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--pico-color);
-            font-size: 1.1rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-weight: 500;
-            transition: opacity 0.3s, padding-left 0.3s;
-            display: inline-block;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.6;
-            padding-left: 10px;
-        }
-
-        /* ナビゲーションリンク (Sub) */
-        .sub-links {
-            list-style: none;
-            padding: 0;
-            margin-top: 4rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .sub-links a {
-            text-decoration: none;
-            color: var(--pico-muted-color);
-            font-size: 0.9rem;
-            letter-spacing: 0.1em;
-            transition: color 0.3s;
-        }
-
-        .sub-links a:hover {
-            color: var(--pico-color);
-        }
-
-        /* 時計エリア */
-        .clock-area {
-            font-family: monospace; /* 等幅フォントでデジタル時計っぽく */
-            font-size: 0.9rem;
-            color: var(--pico-muted-color);
-            letter-spacing: 0.1em;
-            margin-top: auto; /* 一番下に配置 */
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .clock-area::before {
-            content: "";
-            display: block;
-            width: 30px;
-            height: 1px;
-            background-color: var(--pico-muted-color);
-        }
-
-        /* --- 右側：ビジュアルエリア --- */
-        .visual-wrapper {
-            width: 100%;
-            height: 50vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (min-width: 992px) {
-            .visual-wrapper {
-                height: 100%;
-                justify-content: flex-end;
-            }
-        }
-
-        .photo-frame {
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            aspect-ratio: 4/3;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 20px 20px 60px rgba(0,0,0,0.1);
-        }
-
-        .slide-image {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 2s ease-in-out, transform 8s linear;
-            transform: scale(1.0);
-            filter: grayscale(100%) contrast(1.1);
-        }
-
-        .slide-image.active {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* モバイル対応 */
-        @media (max-width: 991px) {
-            body {
-                height: auto;
-                overflow-y: auto;
-                padding: 2rem 0;
-            }
-            .main-container {
-                height: auto;
-                gap: 3rem;
-            }
-            .text-area {
-                order: 2;
-                padding: 0;
-                align-items: center;
-                text-align: center;
-            }
-            .visual-wrapper {
-                order: 1;
-                height: 400px;
-            }
-            .nav-links, .sub-links {
-                align-items: center;
-            }
-            .text-area {
-                justify-content: flex-start;
-                gap: 3rem;
-            }
-            /* スマホでは時計を隠すか、控えめに */
-            .clock-area {
-                margin-top: 2rem;
-                justify-content: center;
-            }
-        }
-/* これを追加して、リンクの青色を「白」に変える */
 :root {
-    --pico-primary: #ffffff; /* メインカラーを白に */
-    --pico-primary-underline: #ffffff; /* 下線も白に */
-    --pico-primary-hover: #cccccc; /* ホバー時は少しグレーに */
-    --pico-primary-focus: rgba(255, 255, 255, 0.125);
+    --pico-primary: #000000;
+    --pico-primary-background: #000000;
+    --pico-primary-underline: #000000;
+    --pico-primary-hover: #333333;
+    --pico-primary-focus: rgba(0, 0, 0, 0.125);
+    --pico-primary-inverse: #ffffff;
+    --pico-background-color: #ffffff;
+    --pico-color: #1a1a1a;
+    --pico-muted-color: #666666;
+    --pico-border-color: #e5e5e5;
 }
 
-/* リンクの文字スタイルをもう少し上品に */
-.nav-links a {
-    color: #ffffff !important; /* 強制的に白にする */
-    font-family: serif; /* もしロゴに合わせて明朝体にしたいなら */
-    font-weight: normal; /* 文字を細くして繊細に */
-    letter-spacing: 0.2em; /* 文字間隔を広げてゆったりさせる */
-    font-size: 0.9rem;
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pico-background-color: #111111;
+        --pico-color: #f0f0f0;
+        --pico-primary: #ffffff;
+        --pico-muted-color: #888888;
+        --pico-border-color: #333333;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* スクロールを消してアプリっぽく */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+
+/* コンテナ */
+.main-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 2rem;
+}
+
+/* PC以上で左右分割 */
+@media (min-width: 992px) {
+    .main-container {
+        grid-template-columns: 4fr 6fr; /* 左4 : 右6 */
+        align-items: center;
+    }
+}
+
+/* --- 右側：ビジュアルエリア --- */
+.visual-wrapper {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 992px) {
+    .visual-wrapper {
+        height: 100%;
+        justify-content: flex-end;
+    }
+}
+
+.photo-frame {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.1);
+}
+
+.slide-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease-in-out, transform 8s linear;
+    transform: scale(1.0);
+    filter: grayscale(100%) contrast(1.1);
+}
+
+.slide-image.active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* モバイル対応 */
+@media (max-width: 991px) {
+    body {
+        height: auto;
+        overflow-y: auto;
+        padding: 2rem 0;
+    }
+    .main-container {
+        height: auto;
+        gap: 3rem;
+    }
+    .visual-wrapper {
+        order: 1;
+        height: 400px;
+    }
 }

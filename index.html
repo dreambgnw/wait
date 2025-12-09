@@ -6,22 +6,20 @@
     <title>LOUNGE | QUICK INSTANT</title>
     <!-- Pico.css の読み込み -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- ★追加: 共通サイドバーのスタイル -->
     <link rel="stylesheet" href="css/sidebar.css">
-
+    <!-- Topページ固有のスタイル -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
 <div class="main-container">
     
-    
-        <!-- 待合室の時計 -->
-        <div class="clock-area">
-            <span id="current-date"></span>
-            <span id="current-time"></span>
-        </div>
-
-    </div>
+    <!-- ▼ 左サイドバー 
+         以前はここに <div class="text-area">...</div> がありましたが、
+         削除しました。js/sidebar-loader.js が自動的に共通サイドバーを挿入します。
+    -->
 
     <!-- 右側：ビジュアルエリア -->
     <div class="visual-wrapper">
@@ -51,34 +49,14 @@
             setInterval(nextSlide, slideInterval);
         }
     });
-
-    // 時計の更新
-    function updateClock() {
-        const now = new Date();
-        
-        // 日付フォーマット: YYYY.MM.DD
-        const dateStr = now.getFullYear() + '.' + 
-                        String(now.getMonth() + 1).padStart(2, '0') + '.' + 
-                        String(now.getDate()).padStart(2, '0');
-        
-        // 時間フォーマット: HH:MM:SS
-        const timeStr = String(now.getHours()).padStart(2, '0') + ':' + 
-                        String(now.getMinutes()).padStart(2, '0') + ':' + 
-                        String(now.getSeconds()).padStart(2, '0');
-
-        document.getElementById('current-date').textContent = dateStr;
-        document.getElementById('current-time').textContent = timeStr;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock(); // 初回実行
+    // ※時計スクリプトはサイドバー側に移ったので削除済み
 </script>
 
-    <!-- PC用サイドバー読み込み -->
-    <script src="js/sidebar-loader.js"></script>
+<!-- ★追加: PC用サイドバー読み込み -->
+<script src="js/sidebar-loader.js"></script>
 
-    <!-- スマホ用メニュー読み込み -->
-    <script src="js/nav-loader.js"></script>
+<!-- Mobile Navigation Loader -->
+<script src="js/nav-loader.js"></script>
 
 </body>
 </html>
