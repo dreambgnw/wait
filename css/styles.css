@@ -224,3 +224,19 @@
                 justify-content: center;
             }
         }
+/* これを追加して、リンクの青色を「白」に変える */
+:root {
+    --pico-primary: #ffffff; /* メインカラーを白に */
+    --pico-primary-underline: #ffffff; /* 下線も白に */
+    --pico-primary-hover: #cccccc; /* ホバー時は少しグレーに */
+    --pico-primary-focus: rgba(255, 255, 255, 0.125);
+}
+
+/* リンクの文字スタイルをもう少し上品に */
+.nav-links a {
+    color: #ffffff !important; /* 強制的に白にする */
+    font-family: serif; /* もしロゴに合わせて明朝体にしたいなら */
+    font-weight: normal; /* 文字を細くして繊細に */
+    letter-spacing: 0.2em; /* 文字間隔を広げてゆったりさせる */
+    font-size: 0.9rem;
+}
