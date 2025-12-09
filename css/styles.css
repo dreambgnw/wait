@@ -1,68 +1,46 @@
-/* Topページ固有のスタイル
-  ※サイドバー関連の記述は css/sidebar.css に移動したため削除しました。
-  ここでは全体のレイアウトと右側のビジュアルエリアのみ定義します。
+/* Topページ固有スタイル (Index)
+   サイドバーは sidebar.css で制御。
+   ここでは全体レイアウトと右側のビジュアルエリアのみ。
 */
 
+/* --- ベース設定 --- */
 :root {
-    /* ライトモード時の設定（!importantで強制適用） */
-    --pico-primary: #000000 !important;
-    --pico-primary-background: #000000 !important;
-    --pico-primary-underline: #000000 !important;
-    --pico-primary-hover: #333333 !important;
-    --pico-primary-focus: rgba(0, 0, 0, 0.125) !important;
-    --pico-primary-inverse: #ffffff !important;
-    --pico-background-color: #ffffff !important; /* 背景を真っ白に */
-    --pico-color: #1a1a1a !important;
-    --pico-muted-color: #666666 !important;
-    --pico-border-color: #e5e5e5 !important;
-}
-
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* 背景色をサイドバーと統一して、より深い黒に変更 */
-        /* !important を追加してPico.cssのデフォルト色を強制上書き */
-        --pico-background-color: #050505 !important;
-        --pico-color: #f0f0f0 !important;
-        --pico-primary: #ffffff !important;
-        --pico-muted-color: #888888 !important;
-        --pico-border-color: #333333 !important;
-    }
+    --pico-background-color: #050505 !important;
 }
 
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden; /* スクロールを消してアプリっぽく */
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-    /* 明示的に背景色を指定して、変数の適用漏れを防ぐ */
-    background-color: var(--pico-background-color);
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+    background-color: #050505;
 }
 
-/* コンテナ */
+/* --- レイアウトコンテナ --- */
 .main-container {
     width: 100%;
     max-width: 1400px;
-    height: 90vh;
+    height: 90vh; /* 画面中央に浮く高さ */
     display: grid;
     grid-template-columns: 1fr;
     padding: 0 2rem;
     gap: 2rem;
 }
 
-/* PC以上で左右分割 */
+/* PCレイアウト */
 @media (min-width: 992px) {
     .main-container {
-        grid-template-columns: 4fr 6fr; /* 左4 : 右6 */
-        align-items: center;
+        /* 左:サイドバー(sidebar.css) 右:ビジュアルエリア */
+        grid-template-columns: 4fr 6fr; 
+        align-items: center; /* 垂直中央揃え */
     }
 }
 
-/* --- 右側：ビジュアルエリア --- */
+/* --- 右側：ビジュアルエリア (スライドショー) --- */
 .visual-wrapper {
     width: 100%;
     height: 50vh;
@@ -74,7 +52,7 @@ body {
 
 @media (min-width: 992px) {
     .visual-wrapper {
-        height: 100%;
+        height: 100%; /* 親(90vh)に合わせる */
         justify-content: flex-end;
     }
 }
@@ -86,7 +64,8 @@ body {
     aspect-ratio: 4/3;
     overflow: hidden;
     background: #000;
-    box-shadow: 20px 20px 60px rgba(0,0,0,0.1);
+    /* 影をつけて浮遊感を出す */
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.3);
 }
 
 .slide-image {
@@ -97,7 +76,7 @@ body {
     opacity: 0;
     transition: opacity 2s ease-in-out, transform 8s linear;
     transform: scale(1.0);
-    filter: grayscale(100%) contrast(1.1);
+    filter: grayscale(100%) contrast(1.1); /* モノクロ・シネマティック */
 }
 
 .slide-image.active {
@@ -105,19 +84,33 @@ body {
     transform: scale(1.1);
 }
 
-/* モバイル対応 */
+/* --- モバイル対応 --- */
 @media (max-width: 991px) {
     body {
-        height: auto;
-        overflow-y: auto;
-        padding: 2rem 0;
+        height: 100vh;
+        overflow: hidden;
+        padding: 0;
     }
     .main-container {
-        height: auto;
-        gap: 3rem;
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        gap: 0;
+        display: block; 
     }
+    
     .visual-wrapper {
-        order: 1;
-        height: 400px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .photo-frame {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        aspect-ratio: auto;
+        border-radius: 0;
+        box-shadow: none;
     }
 }
