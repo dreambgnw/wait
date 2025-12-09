@@ -1,8 +1,21 @@
 /* PCサイドバー専用スタイル
-  index.html (styles.css) の .text-area 関連のスタイルをそのまま移植
+  wait/css/styles.css (Index用) の内容をそのまま移植し、
+  Pico.cssのデフォルトカラー(青)を強力に上書きします。
 */
 
-/* スマホでは非表示 */
+/* --- 重要：Pico.cssのデフォルトカラーを上書き(強制ホワイト化) --- */
+:root {
+    --pico-primary: #ffffff !important;
+    --pico-primary-background: #ffffff !important;
+    --pico-primary-underline: #ffffff !important;
+    --pico-primary-hover: #cccccc !important;
+    --pico-color: #e0e0e0;
+    --pico-muted-color: #777;
+}
+
+/* --- レイアウト (Mobile First) --- */
+
+/* スマホではサイドバーを非表示 (mobile-nav.htmlに任せる) */
 .text-area {
     display: none; 
 }
@@ -12,19 +25,19 @@
     .text-area {
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* 上下に要素を散らす */
-        /* index.html と同じパディング設定 */
+        justify-content: space-between;
+        /* index.html (styles.css) と全く同じ余白設定 */
         padding: 4rem 0 4rem 4rem; 
-        background-color: var(--pico-background-color);
+        background-color: #050505; /* 背景色も明示 */
         position: relative;
         height: 100vh;
-        /* レイアウト崩れ防止 */
         box-sizing: border-box; 
         align-items: flex-start;
+        min-width: 300px; /* 幅確保 */
     }
 }
 
-/* --- サイドバー内パーツ (index.htmlと完全一致) --- */
+/* --- サイドバー内パーツ (styles.cssから移植) --- */
 
 /* ロゴ */
 .site-logo {
@@ -34,8 +47,8 @@
     letter-spacing: 0.05em;
     margin-bottom: 2rem;
     line-height: 1;
-    display: block; /* aタグでもブロック表示 */
-    color: var(--pico-color);
+    display: block;
+    color: #ffffff !important; /* 強制的に白 */
     text-decoration: none;
 }
 
@@ -56,22 +69,22 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 500;
-    color: var(--pico-color);
+    color: #ffffff !important; /* 強制的に白 */
     transition: opacity 0.3s, padding-left 0.3s;
     display: inline-block;
+    opacity: 0.6; /* デフォルトは少し薄く */
 }
 
 .nav-links a:hover {
-    opacity: 0.6;
+    opacity: 1;
     padding-left: 10px;
 }
 
-/* アクティブリンクのスタイル（下層ページ用に追加） */
+/* アクティブなリンク */
 .nav-links a.active {
+    opacity: 1;
     font-weight: 700;
-    /* opacity: 1; */
 }
-
 
 /* サブリンク (Signalなど) */
 .sub-links {
@@ -85,24 +98,23 @@
 
 .sub-links a {
     text-decoration: none;
-    color: var(--pico-muted-color);
+    color: #777 !important; /* グレー */
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     transition: color 0.3s;
 }
 
 .sub-links a:hover {
-    color: var(--pico-color);
+    color: #ffffff !important;
 }
-
 
 /* 時計エリア */
 .clock-area {
-    font-family: monospace; /* 等幅フォントでデジタル時計っぽく */
+    font-family: monospace;
     font-size: 0.9rem;
-    color: var(--pico-muted-color);
+    color: #777;
     letter-spacing: 0.1em;
-    margin-top: auto; /* 一番下に配置 */
+    margin-top: auto;
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -113,5 +125,13 @@
     display: block;
     width: 30px;
     height: 1px;
-    background-color: var(--pico-muted-color);
+    background-color: #777;
+}
+
+.nav-links a {
+    color: #ffffff !important; /* 強制的に白にする */
+    font-family: serif; /* もしロゴに合わせて明朝体にしたいなら */
+    font-weight: normal; /* 文字を細くして繊細に */
+    letter-spacing: 0.2em; /* 文字間隔を広げてゆったりさせる */
+    font-size: 0.9rem;
 }

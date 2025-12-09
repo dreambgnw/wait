@@ -1,39 +1,34 @@
-// サイドバーのHTMLをJS内に埋め込んだ「サーバー不要版」
-// index.html の構造 (.text-area) をそのまま流用しています。
+// ロゴをリンクではなく「置物」に変更したバージョン
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 挿入先のコンテナを探す (.split-layout がある前提)
-    const layout = document.querySelector('.split-layout');
+    const layout = document.querySelector('.split-layout, .main-container');
     if (!layout) return;
 
-    // 埋め込み用サイドバーHTML (index.htmlのデザインを完全再現)
     const sidebarHTML = `
     <div class="text-area">
         <div>
-            <!-- ロゴ -->
+            <!-- ロゴ (リンク削除 / 置物化) -->
             <header>
-                <!-- index.htmlではdivでしたが、戻れるようにaタグにしています。見た目は同じです -->
-                <a href="index.html" class="site-logo">Lounge.</a>
+                <!-- cursor-default で「クリックできない」ことを明示 -->
+                <div class="site-logo" style="cursor: default;">Lounge.</div>
             </header>
 
             <!-- メインナビ -->
             <nav>
                 <ul class="nav-links">
-                    <!-- 下層ページなのでHomeを追加 -->
+                    <!-- Homeが唯一の戻る手段 -->
                     <li><a href="index.html">Home</a></li>
                     <li><a href="journal.html">Journal</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
                 </ul>
 
-                <!-- サブナビ -->
                 <ul class="sub-links">
                     <li><a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank">Signal</a></li>
                 </ul>
             </nav>
         </div>
 
-        <!-- 待合室の時計 (IDはJS制御用に sidebar- を付与していますが、クラス構成は同じです) -->
         <div class="clock-area">
             <span id="sidebar-date"></span>
             <span id="sidebar-time"></span>
@@ -41,22 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
-    // HTMLをDOM化して挿入
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = sidebarHTML;
     
-    // .text-area を取り出してレイアウトの先頭に追加
     const sidebar = tempDiv.querySelector('.text-area');
     if (sidebar) {
         layout.prepend(sidebar);
-        
-        // 初期化処理
         initActiveLink();
         startSidebarClock();
     }
 });
 
-// 現在のページのリンクをハイライトする
 function initActiveLink() {
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     const links = document.querySelectorAll('.nav-links a');
@@ -71,7 +61,6 @@ function initActiveLink() {
     });
 }
 
-// サイドバーの時計を動かす
 function startSidebarClock() {
     function update() {
         const now = new Date();

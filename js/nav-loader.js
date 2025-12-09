@@ -1,9 +1,7 @@
-// mobile-nav.html を読み込まず、ここに直接HTMLを持たせた「サーバー不要版」スクリプト
-// これなら file:// プロトコルでもエラーになりません。
+// スマホメニューもロゴを「置物」化
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Tailwind CSSの自動注入
     if (!document.querySelector('script[src*="tailwindcss"]')) {
         console.log("Tailwind CSS not found, injecting CDN...");
         const twScript = document.createElement('script');
@@ -11,14 +9,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(twScript);
     }
 
-    // 2. メニューのHTML構造（mobile-nav.html の中身と同じ）
     const menuHTML = `
+    <style>
+        @media (min-width: 1024px) {
+            .lg\\:hidden { display: none !important; }
+        }
+    </style>
+
     <!-- Bottom Bar (Fixed) -->
     <div class="lg:hidden fixed bottom-0 left-0 w-full z-50 border-t border-white/10 bg-black/80 backdrop-blur-md">
         <div class="flex items-center justify-between px-6 py-4">
-            <a href="index.html" class="font-serif text-xl font-bold tracking-wider text-white hover:opacity-70 transition-opacity">
+            
+            <!-- Logo (リンク削除 / 置物化) -->
+            <!-- cursor-default を適用 -->
+            <div class="font-serif text-xl font-bold tracking-wider text-white cursor-default">
                 Lounge.
-            </a>
+            </div>
+
             <div class="flex items-center gap-6">
                 <button onclick="window.toggleSearch()" class="text-gray-400 hover:text-white transition-colors" aria-label="Search">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,13 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
-    // 3. HTMLをページに追加
     const div = document.createElement('div');
     div.id = "mobile-nav-container";
     div.innerHTML = menuHTML;
     document.body.appendChild(div);
 
-    // 4. 動作ロジック（グローバル関数として定義）
     window.toggleMenu = function() {
         const menu = document.getElementById('mobile-menu');
         const line1 = document.getElementById('line1');
@@ -124,9 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(elTime) elTime.textContent = timeStr;
     }
     
-    // 時計開始
     updateClock();
     setInterval(updateClock, 1000);
 
-    console.log("Mobile Nav loaded successfully (Embedded Mode).");
+    console.log("Mobile Nav loaded successfully (Logo is non-clickable).");
 });

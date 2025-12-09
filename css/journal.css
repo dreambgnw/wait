@@ -39,7 +39,10 @@ a:hover { opacity: 0.7; }
     min-height: 100vh;
 }
 
-/* .text-area は sidebar.css へ移動 */
+/* ★重要修正★
+   ここに書いてあった .text-area { display: none; } は削除しました。
+   サイドバーの表示・非表示はすべて sidebar.css で管理します。
+*/
 
 .content-area {
     padding: 2rem 1.5rem 8rem;
@@ -56,17 +59,16 @@ a:hover { opacity: 0.7; }
 
     .split-layout {
         display: grid;
-        grid-template-columns: 350px 1fr; /* Journalはサイドバー幅固定でもOK */
+        grid-template-columns: 4fr 6fr; 
         height: 100vh;
     }
-
-    /* .text-area は sidebar.css へ */
 
     /* 右コンテンツエリア */
     .content-area {
         padding: 4rem 6rem;
         overflow-y: auto;
         height: 100vh;
+        display: block; 
     }
 }
 
