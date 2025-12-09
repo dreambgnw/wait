@@ -1,7 +1,9 @@
-// スマホメニューもロゴを「置物」化
+// mobile-nav.html を読み込まず、ここに直接HTMLを持たせた「サーバー不要版」スクリプト
+// これなら file:// プロトコルでもエラーになりません。
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // 1. Tailwind CSSの自動注入
     if (!document.querySelector('script[src*="tailwindcss"]')) {
         console.log("Tailwind CSS not found, injecting CDN...");
         const twScript = document.createElement('script');
@@ -9,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(twScript);
     }
 
+    // 2. メニューのHTML構造
     const menuHTML = `
     <style>
         @media (min-width: 1024px) {
@@ -17,22 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
     </style>
 
     <!-- Bottom Bar (Fixed) -->
-    <div class="lg:hidden fixed bottom-0 left-0 w-full z-50 border-t border-white/10 bg-black/80 backdrop-blur-md">
+    <div class="lg:hidden fixed bottom-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md">
         <div class="flex items-center justify-between px-6 py-4">
             
             <!-- Logo (リンク削除 / 置物化) -->
-            <!-- cursor-default を適用 -->
             <div class="font-serif text-xl font-bold tracking-wider text-white cursor-default">
                 Lounge.
             </div>
 
             <div class="flex items-center gap-6">
-                <button onclick="window.toggleSearch()" class="text-gray-400 hover:text-white transition-colors" aria-label="Search">
+                <!-- 
+                   ★修正: style属性を追加して、Pico.cssのデフォルトボタンスタイル(背景・枠線・影)を打ち消します
+                -->
+                <button onclick="window.toggleSearch()" class="text-gray-400 hover:text-white transition-colors flex items-center justify-center" aria-label="Search" style="background: transparent; border: none; padding: 0; box-shadow: none; width: auto; height: auto;">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </button>
-                <button id="menu-btn" onclick="window.toggleMenu()" class="text-gray-400 hover:text-white transition-colors w-6 h-6 relative flex justify-center items-center z-50" aria-label="Menu">
+                
+                <button id="menu-btn" onclick="window.toggleMenu()" class="text-gray-400 hover:text-white transition-colors w-6 h-6 relative flex justify-center items-center z-50" aria-label="Menu" style="background: transparent; border: none; padding: 0; box-shadow: none; width: auto; height: auto;">
                     <div class="w-6 flex flex-col items-end gap-1.5 transition-all duration-300">
                         <span id="line1" class="block w-6 h-0.5 bg-current transition-all duration-300 origin-center"></span>
                         <span id="line2" class="block w-4 h-0.5 bg-current transition-all duration-300 origin-center"></span>
@@ -68,7 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <form action="#" method="get" onsubmit="return false;">
                 <input type="text" name="q" placeholder="Search..." class="w-full bg-transparent border-b-2 border-white/30 text-2xl text-white py-2 focus:outline-none focus:border-white font-serif placeholder-gray-600 transition-colors">
             </form>
-            <button onclick="window.toggleSearch()" class="mt-8 text-sm text-gray-500 uppercase tracking-widest hover:text-white w-full text-center">Cancel</button>
+            <!-- Cancelボタンも念のためスタイル調整 -->
+            <button onclick="window.toggleSearch()" class="mt-8 text-sm text-gray-500 uppercase tracking-widest hover:text-white w-full text-center" style="background: transparent; border: none; box-shadow: none;">Cancel</button>
         </div>
     </div>
     `;
