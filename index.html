@@ -4,213 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOUNGE | QUICK INSTANT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            font-family: 'Inter', serif;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-100px); opacity: 0; }
-            50% { opacity: 0.2; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        .dust-particle {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 50%;
-            pointer-events: none;
-            animation-name: fall;
-            animation-iteration-count: infinite;
-            filter: blur(0.5px);
-            z-index: 10;
-        }
-
-        .sunlight-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            background: radial-gradient(
-                circle at 20% 20%, 
-                rgba(255, 255, 255, 0.5) 0%, 
-                rgba(255, 255, 255, 0.1) 40%,
-                rgba(0, 0, 0, 0.1) 80%, 
-                rgba(0, 0, 0, 0.15) 100%
-            );
-        }
-
-        #progress-track {
-            height: 12px;
-            background-color: #ffffff;
-            border-radius: 4px; 
-            overflow: hidden;
-            border: 1px solid #d1d5db;
-        }
-
-        #progress-bar {
-            height: 100%;
-            background-color: #000000; 
-            border-radius: 3px; 
-            transition: width 0.5s ease-out; 
-        }
-        .card-glass {
-  background: var(--bg-color);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-}
-body.bg-dark {
-  --page-overlay-color: rgba(255, 255, 255, 0.3);
-}
-body.bg-mix {
-  --page-overlay-color: rgba(255, 255, 255, 0.3);
-}
-body.bg-light {
-  --page-overlay-color: rgba(255, 255, 255, 0.3);
-}
-
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'accent': '#000000', 
-                        'primary-text': '#1f2937', 
-                        'secondary-text': '#6b7280', 
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Pico.css の読み込み -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/Users/shn/wait/css/styles.css">
 </head>
-<body class="min-h-screen flex flex-col items-center bg-gray-100 overflow-hidden relative text-primary-text">
+<body>
 
-    <div id="dust-container" class="absolute inset-0"></div>
-
-    <div class="sunlight-overlay"></div>
-
-    <main class="flex-grow flex flex-col justify-center items-center w-full max-w-4xl z-20 px-4 md:px-8 py-16">
+<div class="main-container">
+    
+    <!-- 左側：テキストエリア -->
+    <div class="text-area">
         
-        <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-7xl font-light tracking-widest mb-4 text-primary-text">
-                QUICK <br>INSTANT <br>LOUNGE
-            </h1>
-            <p class="text-lg md:text-xl font-light text-secondary-text">
-                行ってらっしゃい、待ってるよ。
-            </p>
+        <div>
+            <!-- ロゴ -->
+            <header>
+                <div class="site-logo">Lounge.</div>
+            </header>
+
+            <!-- メインナビ -->
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                </ul>
+
+                <!-- サブナビ -->
+                <ul class="sub-links">
+                    <li><a href="https://signal.me/#eu/m81TbpYpae9qUsL3SK2HkY9NnEzHpuBODVw3PZwdg4uHN1hupMpB4biJUwcuAI-f" target="_blank">Signal</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <div class="w-full max-w-md p-6 bg-white shadow-xl border border-gray-200 rounded-lg card-glass">
-
-            <div id="progress-track">
-                <div id="progress-bar" style="width: 0%;"></div>
-            </div>
-        </div>
-        
-        <div id="redirect-message" class="hidden text-center mt-12">
-            <p class="text-xl md:text-2xl font-semibold mb-6 text-accent">
-                おかえり、待ってたよ。
-            </p>
-            <a href="https://hogus.work" class="inline-flex items-center bg-accent text-white font-bold py-3 px-8 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105 shadow-md text-base card-glass">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.812a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                移動
-            </a>
+        <!-- 待合室の時計 -->
+        <div class="clock-area">
+            <span id="current-date"></span>
+            <span id="current-time"></span>
         </div>
 
-        <p class="absolute bottom-10 text-xs text-secondary-text">
-            予定日時: 2026/02/26 0:00 JST
-        </p>
+    </div>
 
-    </main>
+    <!-- 右側：ビジュアルエリア -->
+    <div class="visual-wrapper">
+        <div class="photo-frame">
+            <img src="https://image.nostr.build/67791bdc2eeafb039e4437be8bea0cb8d18e4355f3e61b48f2139a45ecf58e32.jpg" alt="Disney Sea" class="slide-image active">
+            <img src="https://image.nostr.build/96d5288eb28aea5f20754ecfe390951b5bddd63c9343c826b2af3bc0fbce3ece.jpg" alt="Space" class="slide-image">
+            <img src="https://image.nostr.build/3c14290cee41a5f6a80364de89d6c1f327f283575c9a75148cf14e755295874d.jpg" alt="Light" class="slide-image">
+        </div>
+    </div>
 
-    <script>
+</div>
 
-        const TARGET_DATE_JST = new Date("2026-02-26T00:00:00+09:00").getTime();
-        
-        const START_DATE_JST = new Date("2025-12-01T00:00:00+09:00").getTime();
-        
-        const DUST_PARTICLE_COUNT = 60; 
+<script>
+    // スライドショー
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide-image');
+        let currentSlide = 0;
+        const slideInterval = 6000; 
 
-        const progressBar = document.getElementById('progress-bar');
-        const redirectMessageEl = document.getElementById('redirect-message');
-        const dustContainer = document.getElementById('dust-container');
-
-        const TOTAL_DURATION_MS = TARGET_DATE_JST - START_DATE_JST;
-        const TOTAL_DURATION_DAYS = TOTAL_DURATION_MS / (1000 * 60 * 60 * 24);
-
-        function updateProgress() {
-            const now = new Date().getTime();
-            const distance = TARGET_DATE_JST - now;
-            const pad = (num) => String(num).padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(interval);
-                
-                progressBar.style.width = '100%';
-
-                timeRemainingEl.textContent = '0 Days 00:00:00 Remaining';
-                
-                redirectMessageEl.classList.remove('hidden');
-
-            } else {
-
-                const exactDaysRemaining = distance / (1000 * 60 * 60 * 24);
-
-                const snappedDaysRemaining = Math.ceil(exactDaysRemaining / 10) * 10;
-                
-                let progressPercentage = ((TOTAL_DURATION_DAYS - snappedDaysRemaining) / TOTAL_DURATION_DAYS) * 100;
-                
-                progressPercentage = Math.max(0, Math.min(100, progressPercentage));
-                
-                progressBar.style.width = `${progressPercentage.toFixed(2)}%`;
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                timeRemainingEl.textContent = `${pad(days)} Days ${pad(hours)}:${pad(minutes)}:${pad(seconds)} Remaining`;
-            }
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
 
-        function createDustParticles() {
-            for (let i = 0; i < DUST_PARTICLE_COUNT; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('dust-particle');
-
-            
-                const size = Math.random() * 2 + 1; 
-                const duration = Math.random() * 10 + 15; 
-                const delay = Math.random() * duration * -1; 
-                const left = Math.random() * 100; 
-
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${left}vw`;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${delay}s`;
-
-                dustContainer.appendChild(particle);
-            }
+        if(slides.length > 1) {
+            setInterval(nextSlide, slideInterval);
         }
+    });
 
+    // 時計の更新
+    function updateClock() {
+        const now = new Date();
         
-        window.onload = function() {
-            
-            updateProgress();
-            
-            const interval = setInterval(updateProgress, 1000);
-            
-            
-            createDustParticles();
-        };
+        // 日付フォーマット: YYYY.MM.DD
+        const dateStr = now.getFullYear() + '.' + 
+                        String(now.getMonth() + 1).padStart(2, '0') + '.' + 
+                        String(now.getDate()).padStart(2, '0');
+        
+        // 時間フォーマット: HH:MM:SS
+        const timeStr = String(now.getHours()).padStart(2, '0') + ':' + 
+                        String(now.getMinutes()).padStart(2, '0') + ':' + 
+                        String(now.getSeconds()).padStart(2, '0');
 
-    </script>
+        document.getElementById('current-date').textContent = dateStr;
+        document.getElementById('current-time').textContent = timeStr;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // 初回実行
+</script>
+
 </body>
 </html>

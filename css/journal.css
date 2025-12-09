@@ -1,0 +1,105 @@
+        /* --- 共通デザイン（Topページから継承） --- */
+        :root {
+            --pico-primary: #000000;
+            --pico-primary-background: #000000;
+            --pico-primary-underline: #000000;
+            --pico-primary-hover: #333333;
+            --pico-primary-focus: rgba(0, 0, 0, 0.125);
+            --pico-background-color: #ffffff;
+            --pico-color: #1a1a1a;
+            --pico-muted-color: #666666;
+            --pico-border-color: #e5e5e5;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --pico-background-color: #111111;
+                --pico-color: #f0f0f0;
+                --pico-primary: #ffffff;
+                --pico-muted-color: #888888;
+                --pico-border-color: #333333;
+            }
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        }
+
+        /* --- ヘッダー（ナビゲーション） --- */
+        .site-header {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--pico-border-color);
+            margin-bottom: 4rem;
+        }
+
+        .header-logo {
+            font-family: serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--pico-color);
+            text-decoration: none;
+        }
+
+        .header-nav a {
+            color: var(--pico-muted-color);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s;
+        }
+
+        .header-nav a:hover,
+        .header-nav a.active {
+            color: var(--pico-color);
+        }
+
+        /* --- 記事リスト --- */
+        .post-item {
+            margin-bottom: 4rem;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.3s;
+        }
+
+        .post-item:hover {
+            opacity: 0.7;
+        }
+
+        .post-meta {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--pico-muted-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .post-summary {
+            color: var(--pico-muted-color);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ページタイトルエリア */
+        .page-header {
+            margin-bottom: 4rem;
+        }
+        .page-title {
+            font-family: serif;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .page-subtitle {
+            color: var(--pico-muted-color);
+            font-family: monospace;
+        }

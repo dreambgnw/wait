@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal - Quick Instant Lounge.</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="css/journal.css">
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="container site-header">
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" class="header-logo">Lounge.</a>
+                </li>
+            </ul>
+            <ul class="header-nav">
+                <li><a href="index.html" class="active">Journal</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+        
+        <div class="page-header">
+            <h1 class="page-title">Journal</h1>
+            <p class="page-subtitle">Thoughts, Notes, and Records.</p>
+        </div>
+
+        <!-- 記事ループ (Hugoではここをrangeで回す) -->
+        <div class="post-list">
+            
+            <a href="https://hogus.work/article/na2025-repo" class="post-item">
+                <span class="post-meta">2025.12.01 / Report</span>
+                <h2 class="post-title">Nostrasia2025 会場レポ</h2>
+                <p class="post-summary">どうも</p>
+            </a>
+<!--
+            <a href="https://hogus.work/article/nos2025-adcal" class="post-item">
+                <span class="post-meta">2025.12.12 / Nostr</span>
+                <h2 class="post-title">Nostr、一年のまとめ。</h2>
+                <p class="post-summary">どうも</p>
+            </a>
+-->
+        </div>
+
+    </main>
+
+    <footer class="container" style="padding: 2rem 0; border-top: 1px solid var(--pico-border-color); margin-top: 4rem;">
+        <small style="color: var(--pico-muted-color);">&copy; 2025 Hogus</small>
+    </footer>
+
+</body>
+</html>
