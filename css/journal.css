@@ -1,38 +1,37 @@
-/* --- 共通デザイン --- */
+/* --- 共通デザイン（styles.cssと同じ設定） --- */
 :root {
-    --pico-primary: #000000;
-    --pico-primary-background: #000000;
-    --pico-primary-underline: #000000;
-    --pico-primary-hover: #333333;
-    --pico-primary-focus: rgba(0, 0, 0, 0.125);
-    --pico-background-color: #ffffff;
-    --pico-color: #1a1a1a;
-    --pico-muted-color: #666666;
-    --pico-border-color: #e5e5e5;
+    /* ライト：白背景 */
+    --pico-background-color: #ffffff !important;
+    --pico-color: #1a1a1a !important;
+    --pico-muted-color: #666666 !important;
+    --pico-border-color: #e5e5e5 !important;
+    --pico-primary: #000000 !important;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --pico-background-color: #050505;
-        --pico-color: #f0f0f0;
-        --pico-primary: #ffffff;
-        --pico-muted-color: #777;
-        --pico-border-color: #333333;
+        /* ダーク：黒背景 */
+        --pico-background-color: #050505 !important;
+        --pico-color: #f0f0f0 !important;
+        --pico-muted-color: #888888 !important;
+        --pico-border-color: #333333 !important;
+        --pico-primary: #ffffff !important;
     }
 }
 
-/* スマホ用デフォルト */
 body {
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     margin: 0;
     padding: 0;
     width: 100%;
+    background-color: var(--pico-background-color);
+    color: var(--pico-color);
 }
 
 a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
 a:hover { opacity: 0.7; }
 
-/* スマホ用レイアウト */
+/* --- レイアウト構造 --- */
 .split-layout {
     width: 100%;
     min-height: 100vh;
@@ -42,22 +41,18 @@ a:hover { opacity: 0.7; }
     width: 100%;
 }
 
-/* --- PC用レイアウト (index.htmlと統一) --- */
 @media (min-width: 992px) {
     body {
-        /* 画面中央に配置する設定 */
         height: 100vh;
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--pico-background-color);
     }
 
     .split-layout {
         display: grid;
-        grid-template-columns: 4fr 6fr; /* 左4 : 右6 */
-        /* index.htmlと同じサイズ感に */
+        grid-template-columns: 4fr 6fr; 
         width: 100%;
         max-width: 1400px;
         height: 90vh;
@@ -65,16 +60,16 @@ a:hover { opacity: 0.7; }
         gap: 2rem;
     }
 
-    /* 右コンテンツエリア */
     .content-area {
-        padding: 4rem 6rem;
-        overflow-y: auto; /* ここだけスクロール */
-        height: 100%;     /* 親(90vh)いっぱいに */
+        /* 上の余白を 4rem から 1rem に減らしました */
+        padding: 1rem 6rem 4rem;
+        overflow-y: auto;
+        height: 100%;
         display: block; 
     }
 }
 
-/* --- Journal コンテンツスタイル --- */
+/* --- Journal コンテンツ --- */
 .page-header { margin-bottom: 4rem; }
 .page-title { font-family: serif; font-size: 3rem; margin-bottom: 0.5rem; line-height: 1.1; }
 .page-subtitle { color: var(--pico-muted-color); font-family: monospace; font-size: 0.9rem; }

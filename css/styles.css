@@ -1,11 +1,31 @@
-/* Topページ固有スタイル (Index)
-   サイドバーは sidebar.css で制御。
-   ここでは全体レイアウトと右側のビジュアルエリアのみ。
+/* Topページ固有のスタイル
+   サイドバーは css/sidebar.css で制御（ライト＝黒、ダーク＝白）
+   ここではメインエリアを制御（ライト＝白、ダーク＝黒）して、コントラストを作ります。
 */
 
-/* --- ベース設定 --- */
 :root {
-    --pico-background-color: #050505 !important;
+    /* [ライトモード設定] メインエリアは「白」 */
+    --pico-primary: #000000 !important;
+    --pico-primary-background: #000000 !important;
+    --pico-primary-underline: #000000 !important;
+    --pico-primary-hover: #333333 !important;
+    --pico-primary-inverse: #ffffff !important;
+    
+    --pico-background-color: #ffffff !important; /* 背景：白 */
+    --pico-color: #1a1a1a !important;            /* 文字：黒 */
+    --pico-muted-color: #666666 !important;
+    --pico-border-color: #e5e5e5 !important;
+}
+
+/* [ダークモード設定] メインエリアは「黒」 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pico-background-color: #050505 !important; /* 背景：黒 */
+        --pico-color: #f0f0f0 !important;            /* 文字：白 */
+        --pico-primary: #ffffff !important;
+        --pico-muted-color: #888888 !important;
+        --pico-border-color: #333333 !important;
+    }
 }
 
 body {
@@ -16,31 +36,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
-    background-color: #050505;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--pico-background-color);
+    color: var(--pico-color);
 }
 
-/* --- レイアウトコンテナ --- */
+/* コンテナ */
 .main-container {
     width: 100%;
     max-width: 1400px;
-    height: 90vh; /* 画面中央に浮く高さ */
+    height: 90vh;
     display: grid;
     grid-template-columns: 1fr;
     padding: 0 2rem;
     gap: 2rem;
 }
 
-/* PCレイアウト */
 @media (min-width: 992px) {
     .main-container {
-        /* 左:サイドバー(sidebar.css) 右:ビジュアルエリア */
         grid-template-columns: 4fr 6fr; 
-        align-items: center; /* 垂直中央揃え */
+        align-items: center;
     }
 }
 
-/* --- 右側：ビジュアルエリア (スライドショー) --- */
+/* --- 右側：ビジュアルエリア --- */
 .visual-wrapper {
     width: 100%;
     height: 50vh;
@@ -52,7 +71,7 @@ body {
 
 @media (min-width: 992px) {
     .visual-wrapper {
-        height: 100%; /* 親(90vh)に合わせる */
+        height: 100%;
         justify-content: flex-end;
     }
 }
@@ -63,9 +82,9 @@ body {
     max-width: 700px;
     aspect-ratio: 4/3;
     overflow: hidden;
-    background: #000;
-    /* 影をつけて浮遊感を出す */
-    box-shadow: 20px 20px 60px rgba(0,0,0,0.3);
+    /* 写真の枠線や背景もテーマに合わせて調整 */
+    background: var(--pico-color); 
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.1);
 }
 
 .slide-image {
@@ -76,7 +95,7 @@ body {
     opacity: 0;
     transition: opacity 2s ease-in-out, transform 8s linear;
     transform: scale(1.0);
-    filter: grayscale(100%) contrast(1.1); /* モノクロ・シネマティック */
+    filter: grayscale(100%) contrast(1.1);
 }
 
 .slide-image.active {
@@ -84,7 +103,7 @@ body {
     transform: scale(1.1);
 }
 
-/* --- モバイル対応 --- */
+/* モバイル対応 */
 @media (max-width: 991px) {
     body {
         height: 100vh;

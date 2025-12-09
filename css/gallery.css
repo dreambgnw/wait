@@ -1,23 +1,21 @@
 /* --- 共通デザイン --- */
 :root {
-    --pico-primary: #000000;
-    --pico-primary-background: #000000;
-    --pico-primary-underline: #000000;
-    --pico-primary-hover: #333333;
-    --pico-primary-focus: rgba(0, 0, 0, 0.125);
-    --pico-background-color: #ffffff;
-    --pico-color: #1a1a1a;
-    --pico-muted-color: #666666;
-    --pico-border-color: #e5e5e5;
+    /* ライト：白背景 */
+    --pico-background-color: #ffffff !important;
+    --pico-color: #1a1a1a !important;
+    --pico-muted-color: #666666 !important;
+    --pico-border-color: #e5e5e5 !important;
+    --pico-primary: #000000 !important;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --pico-background-color: #050505;
-        --pico-color: #f0f0f0;
-        --pico-primary: #ffffff;
-        --pico-muted-color: #777;
-        --pico-border-color: #333333;
+        /* ダーク：黒背景 */
+        --pico-background-color: #050505 !important;
+        --pico-color: #f0f0f0 !important;
+        --pico-muted-color: #888888 !important;
+        --pico-border-color: #333333 !important;
+        --pico-primary: #ffffff !important;
     }
 }
 
@@ -26,21 +24,16 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    background-color: var(--pico-background-color);
+    color: var(--pico-color);
 }
 
 a { text-decoration: none; color: inherit; }
 
-/* スマホ用レイアウト */
-.split-layout {
-    width: 100%;
-    min-height: 100vh;
-}
-.content-area {
-    padding: 2rem 1.5rem 8rem;
-    width: 100%;
-}
+/* --- レイアウト --- */
+.split-layout { width: 100%; min-height: 100vh; }
+.content-area { padding: 2rem 1.5rem 8rem; width: 100%; }
 
-/* --- PC用レイアウト (index.htmlと統一) --- */
 @media (min-width: 992px) {
     body {
         height: 100vh;
@@ -48,13 +41,11 @@ a { text-decoration: none; color: inherit; }
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--pico-background-color);
     }
 
     .split-layout {
         display: grid;
         grid-template-columns: 4fr 6fr;
-        /* index.htmlと同じサイズ感 */
         width: 100%;
         max-width: 1400px;
         height: 90vh;
@@ -71,7 +62,7 @@ a { text-decoration: none; color: inherit; }
     }
 }
 
-/* --- ギャラリーグリッド --- */
+/* --- Gallery Grid --- */
 .page-title { font-family: serif; font-size: 3rem; margin-bottom: 2rem; line-height: 1.1; }
 
 .gallery-grid {
