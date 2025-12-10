@@ -1,88 +1,96 @@
-/* PCサイドバー専用スタイル (Final Version) */
+/* PCサイドバー専用スタイル (Fixed Sidebar Version)
+   各ページの左側に常時表示されるサイドバーです。
+   位置調整やパディングはここで一元管理します。
+*/
 
-/* --- 1. 色とフォントの強制統一 --- */
+/* --- Pico.cssの色上書き --- */
 :root {
     --pico-primary: #ffffff !important;
     --pico-primary-background: #ffffff !important;
     --pico-primary-underline: #ffffff !important;
     --pico-primary-hover: #cccccc !important;
-    --pico-color: #ffffff !important; /* 基本文字色も白に */
+    --pico-color: #ffffff !important; 
     --pico-muted-color: #888888 !important;
 }
 
-/* --- 2. レイアウト (Mobile First) --- */
+/* --- レイアウト --- */
 .text-area { display: none; } /* スマホでは非表示 */
 
 @media (min-width: 992px) {
     .text-area {
         display: flex;
         flex-direction: column;
-        /* 余白調整: 上下にたっぷり、左は適度に */
+        /* ★位置補正を一元化: ここでパディングを調整すれば全ページに反映されます */
         padding: 6rem 0 6rem 4rem; 
-        background-color: #050505;
+        
         position: relative;
-        /* ★修正: 100vh から 100% に変更。これで親コンテナ(90vh)の高さに合い、位置ズレが解消されます */
+        /* 親コンテナ(90vh)の高さに合わせることでズレを防ぐ */
         height: 100%;
         box-sizing: border-box; 
-        align-items: flex-start; /* 左揃え */
+        align-items: flex-start;
         min-width: 320px;
         z-index: 10;
+
+        /* 背景を透明にしてメインコンテンツと同化させる */
+        background-color: transparent; 
+        /* 文字色はテーマ変数(白/黒)に従う */
+        color: var(--pico-color);
     }
 }
 
-/* --- 3. ロゴスタイル --- */
+/* --- パーツスタイル --- */
+
+/* ロゴ */
 .site-logo {
-    font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif; /* 明朝体強化 */
-    font-size: 3.5rem; /* 少し大きく */
-    font-weight: 700;  /* 太字 */
+    font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif;
+    font-size: 3.5rem;
+    font-weight: 700;
     letter-spacing: 0.05em;
-    margin-bottom: 4rem; /* メニューとの距離 */
+    margin-bottom: 4rem;
     line-height: 1;
     display: block;
-    color: #ffffff !important;
+    color: var(--pico-color) !important;
     text-decoration: none;
-    cursor: default; /* 置物化 */
+    cursor: default;
 }
 
-/* --- 4. メインナビゲーション --- */
+/* メインナビゲーション */
 .nav-links {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 2rem; /* リンク間の余白を広めに */
+    gap: 2rem;
 }
 
 .nav-links a {
     text-decoration: none;
     font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif;
     font-size: 1.2rem; 
-    letter-spacing: 0.2em; /* 字間を広げて高級感 */
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    font-weight: 700; /* ★重要: 太字でクッキリ */
-    color: #ffffff !important;
+    font-weight: 700;
+    color: var(--pico-color) !important;
     transition: opacity 0.3s, transform 0.3s;
     display: inline-block;
-    opacity: 1.0; /* デフォルトはハッキリ */
+    opacity: 1.0;
 }
 
 .nav-links a:hover {
-    opacity: 0.6; /* ホバーで薄く */
-    transform: translateX(10px); /* 右にスライド */
+    opacity: 0.6;
+    transform: translateX(10px);
 }
 
 .nav-links a.active {
     opacity: 1.0;
-    /* アクティブ時は下線などを引くか、そのままかはお好みで */
-    /* text-decoration: underline; */
 }
 
-/* --- 5. サブリンク (Signal) --- */
+/* サブリンク (Signal) */
 .sub-links {
     list-style: none;
     padding: 0;
-    margin-top: 4rem; /* メインナビとの距離 */
+    margin-top: 4rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -90,24 +98,24 @@
 
 .sub-links a {
     text-decoration: none;
-    color: #888888 !important; /* グレー */
-    font-family: monospace; /* フォントを変えてアクセント */
+    color: var(--pico-muted-color) !important;
+    font-family: monospace;
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     transition: color 0.3s;
 }
 
 .sub-links a:hover {
-    color: #ffffff !important;
+    color: var(--pico-color) !important;
 }
 
-/* --- 6. 時計エリア --- */
+/* 時計エリア */
 .clock-area {
     font-family: monospace;
     font-size: 0.85rem;
-    color: #666666;
+    color: var(--pico-muted-color);
     letter-spacing: 0.15em;
-    margin-top: auto; /* 一番下に配置 */
+    margin-top: auto;
     display: flex;
     gap: 1.5rem;
     align-items: center;
@@ -119,5 +127,5 @@
     display: block;
     width: 40px;
     height: 1px;
-    background-color: #444444;
+    background-color: var(--pico-muted-color);
 }

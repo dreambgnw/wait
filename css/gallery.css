@@ -1,16 +1,13 @@
 /* --- 共通デザイン --- */
 :root {
-    /* ライト：白背景 */
     --pico-background-color: #ffffff !important;
     --pico-color: #1a1a1a !important;
     --pico-muted-color: #666666 !important;
     --pico-border-color: #e5e5e5 !important;
     --pico-primary: #000000 !important;
 }
-
 @media (prefers-color-scheme: dark) {
     :root {
-        /* ダーク：黒背景 */
         --pico-background-color: #050505 !important;
         --pico-color: #f0f0f0 !important;
         --pico-muted-color: #888888 !important;
@@ -30,7 +27,7 @@ body {
 
 a { text-decoration: none; color: inherit; }
 
-/* --- レイアウト --- */
+/* レイアウト */
 .split-layout { width: 100%; min-height: 100vh; }
 .content-area { padding: 2rem 1.5rem 8rem; width: 100%; }
 
@@ -45,12 +42,15 @@ a { text-decoration: none; color: inherit; }
 
     .split-layout {
         display: grid;
+        /* ★統一 */
         grid-template-columns: 4fr 6fr;
         width: 100%;
         max-width: 1400px;
         height: 90vh;
         padding: 0 2rem;
         gap: 2rem;
+        align-items: stretch; /* Galleryは高さ一杯に使いたいのでstretchも可だが、統一感重視でcenter推奨 */
+        /* align-items: center; */
     }
 
     .content-area {
@@ -62,7 +62,7 @@ a { text-decoration: none; color: inherit; }
     }
 }
 
-/* --- Gallery Grid --- */
+/* Gallery Grid */
 .page-title { font-family: serif; font-size: 3rem; margin-bottom: 2rem; line-height: 1.1; }
 
 .gallery-grid {
@@ -86,12 +86,10 @@ a { text-decoration: none; color: inherit; }
     transition: transform 0.6s ease, filter 0.6s ease;
     filter: grayscale(100%);
 }
-
 .gallery-item:hover .gallery-img {
     filter: grayscale(0%);
     transform: scale(1.05);
 }
-
 .gallery-caption {
     font-size: 0.8rem;
     color: var(--pico-muted-color);

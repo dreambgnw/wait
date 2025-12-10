@@ -1,13 +1,15 @@
+// サイドバーのHTMLを生成・挿入するスクリプト
+// 2カラムレイアウトの左側に固定表示されます。
+
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 挿入先のコンテナを探す
+    // 挿入先のコンテナを探す (.split-layout または .main-container)
     const layout = document.querySelector('.split-layout, .main-container');
     if (!layout) return;
 
-    // シンプルで崩れにくい構造
+    // シンプルなサイドバー構造
     const sidebarHTML = `
     <div class="text-area">
-        <!-- 上部ブロック: ロゴとメニュー -->
         <div>
             <header>
                 <div class="site-logo" style="cursor: default;">Lounge.</div>
@@ -26,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </nav>
         </div>
 
-        <!-- 下部ブロック: 時計 -->
         <div class="clock-area">
             <span id="sidebar-date"></span>
             <span id="sidebar-time"></span>
@@ -34,12 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
+    // HTMLをDOM化して挿入
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = sidebarHTML;
     
     const sidebar = tempDiv.querySelector('.text-area');
     if (sidebar) {
+        // コンテナの先頭(左側)に追加
         layout.prepend(sidebar);
+        
         initActiveLink();
         startSidebarClock();
     }
@@ -47,27 +51,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initActiveLink() {
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    const links = document.querySelectorAll('.nav-links a');
-    
-    links.forEach(link => {
-        const href = link.getAttribute('href');
-        // index.html または ルート(/) の場合
-        if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
+    // DOM挿入直後のため念のため少し待つ
+    setTimeout(() => {
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }, 50);
 }
 
 function startSidebarClock() {
     function update() {
         const now = new Date();
-        // YYYY.MM.DD
         const dateStr = now.getFullYear() + '.' + 
                         String(now.getMonth() + 1).padStart(2, '0') + '.' + 
                         String(now.getDate()).padStart(2, '0');
-        // HH:MM:SS
         const timeStr = String(now.getHours()).padStart(2, '0') + ':' + 
                         String(now.getMinutes()).padStart(2, '0') + ':' + 
                         String(now.getSeconds()).padStart(2, '0');
