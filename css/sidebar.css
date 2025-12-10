@@ -13,15 +13,16 @@
         flex-direction: column;
         padding: 6rem 0 6rem 4rem; 
         position: relative;
-        height: 100vh;
+        /* ★修正: 100vh から 100% に変更。これで親コンテナ(90vh)の開始位置に揃います */
+        height: 100%;
         box-sizing: border-box; 
         align-items: flex-start;
         min-width: 320px;
         z-index: 10;
 
-        /* ★変更: 背景を透明にして親(body)の色を透かす */
+        /* 背景を透明にして親(body)の色を透かす */
         background-color: transparent; 
-        /* ★変更: 文字色はテーマ変数に従う */
+        /* 文字色はテーマ変数に従う */
         color: var(--pico-color);
     }
 }
