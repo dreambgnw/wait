@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- 上部ブロック: ロゴとメニュー -->
         <div>
             <header>
-                <div class="site-logo">Lounge.</div>
+                <div class="site-logo" style="cursor: default;">Lounge.</div>
             </header>
 
             <nav>
